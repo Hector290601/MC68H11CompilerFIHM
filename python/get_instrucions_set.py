@@ -9,4 +9,4 @@ def get_instrucions_set():
     return data
 
 if __name__ == "__main__":
-    get_instrucions_set()
+    print(get_instrucions_set())
