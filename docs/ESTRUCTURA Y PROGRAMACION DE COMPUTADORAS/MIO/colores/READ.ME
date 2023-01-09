@@ -1,0 +1,87 @@
+MEMORY ADDRESSES:
+================
+Please note that the manuals don't explain very well that you
+can access the various types of memory by using a prefix.
+
+For example:
+	Location 5 in 8051 code space		C:0005h
+	Location 5 in 8051 internal data space:	D:0005h
+	Location 5 in 8051 external data space:	X:0005h
+
+This method can be used with the Set Memory command, when
+attaching I/O files, and can be used to set the Dump windows so
+that you can see the data in the other areas. If you're not sure
+exactly what prefixes are used for each AVSIM, use 'View''Memory'
+to see what prefixes are used for each address space. The program
+space (M or C usually) is the default memory space prefix.
+
+COLOR MONITORS/EGA & VGA CARDS:
+==============================
+You may find that you do not get a simulator display without using
+either the "-C0" or "-C1" option.  You may need to use either the
+"-D0" or "-D1" option as well.
+
+MOUSE CONTROL:
+=============
+Although it is up to the user to set up the mouse to simulate the 
+cursor keys, the task has been made easier for you:
+
+You should try typing the name of the mouse driver followed 
+by "AVSIM".  This will cause the mouse driver to look at the file
+AVSIM.MNU or AVSIM.DEF as appropriate.   These files are included on
+your AVSIM diskette.  This should work for a Microsoft mouse and some
+others.
+
+UPDATES
+=======
+To see the update history of the simulator and features added since
+the last manual rewrite, read the contents of the relevant ".DOC" file.
+The file name is of the form V*.DOC.
+
+Also, be sure to send your 'UPDATE REGISTRATION' to Ken Anderson Software Inc.
+
+See 'Help' 'Registration' for instructions, or use the form below:
+
+                     AVSIM PRODUCT REGISTRATION 
+
+Be sure to register this product with Avocet, or one of its distributors.
+Consult enclosed literature for registration information.
+
+To ensure that you receive timely bug fixes, patches, etc., you may also
+REGISTER DIRECTLY with the manufacturer of AVSIMs.
+
+To do so, please perform a 'Print-Screen' of the form below and fill it out.
+
+You may FAX or mail the completed form to:
+
+                    Ken Anderson Software Inc.
+                    1232 Stavebank Road
+                    Mississauga, Ontario
+                    CANADA     L5G 2V2
+                    FAX: (416)891-2715
+
+We have included a program 'CVP.EXE' from our associated company, ChipTools Inc.
+This program will let you make patches to the AVSIM product from text files that
+may be FAXed or mailed out to you.
+
+                     AVSIM PRODUCT REGISTRATION 
+
+Product Name:________________   Version #______________
+
+LIC #_______ (REQUIRED: From the small label attached to your original diskette)
+
+Purchased from:____________________________________ Country:_________________
+
+User Name:_________________________________________
+
+Company Name:______________________________________
+
+Address:___________________________________________
+
+        ___________________________________________
+
+        ___________________________________________
+
+        ___________________________________________
+
+FAX # (with routing codes please) ___________________________________________

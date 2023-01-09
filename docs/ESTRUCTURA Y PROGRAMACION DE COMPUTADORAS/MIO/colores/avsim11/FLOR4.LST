@@ -1,0 +1,217 @@
+
+M68HC11 Absolute Assembler   Version 2.70A:FLOR4.ASC
+
+
+   1 A                 ********************************** 
+   2 A                 *PROGRAMA DE INTERRUPCION (ESTE PROGRAMA PRUEBA LA INT.PARA REC. DE DATOS) 
+   3 A                 ********************************** 
+   4 A      1026       PACTL     EQU       $1026                 
+   5 A      1030       ADCTL     EQU       $1030                 
+   6 A      1031       ADR1      EQU       $1031                 
+   7 A      1032       ADR2      EQU       $1032                 
+   8 A      1033       ADR3      EQU       $1033                 
+   9 A      1034       ADR4      EQU       $1034                 
+  10 A      1039       OPTION    EQU       $1039                 
+  11 A      1008       PORTD     EQU       $1008                 
+  12 A      1000       PORTA     EQU       $1000                 
+  13 A      1009       DDRD      EQU       $1009                 
+  14 A      102F       SCDR      EQU       $102F                 
+  15 A      102D       SCCR2     EQU       $102D                 
+  16 A      102E       SCSR      EQU       $102E                 
+  17 A      102C       SCCR1     EQU       $102C                 
+  18 A      102B       BAUD      EQU       $102B                 
+  19 A      103C       HPRIO     EQU       $103C                 
+  20 A                 ********************************** 
+  21 A                 *CONFIGURA REGISTROS 
+  22 A                 ********************************** 
+  23 A      F000                 ORG       $F000                 
+  24 A F000 8E00FF               LDS       #$00FF                
+  25 A F003 CC332C               LDD       #$332C                
+  26 A F006 B7102B               STAA      BAUD                  
+  27 A F009 F7102D               STAB      SCCR2                 
+  28 A F00C 8602                 LDAA      #$02                  
+  29 A F00E B71009               STAA      DDRD                  
+  30 A F011 8600                 LDAA      #$00                  
+  31 A F013 B7102C               STAA      SCCR1                 
+  32 A F016 8680                 LDAA      #$80                  
+  33 A F018 B71026               STAA      PACTL                 
+  34 A F01B 8600                 LDAA      #$00                  
+  35 A F01D B71000               STAA      PORTA                 
+  36 A F020 18CE1000             LDY       #$1000                
+  37 A F024 8604                 LDAA      #$04                  *SE ESCRIBE PRIORIDAD ANTES DE MANDAR A CERO BIT I 
+  38 A F026 B7103C               STAA      HPRIO                 
+  39 A F029 8600                 LDAA      #$00                  *SE MANDA A CERO BIT I DE CCR PARA HABILITAR TODAS LAS 
+  40 A F02B 06                   TAP                             *INTERRUPCIONES MASCARABLES A EXCEPCION DE XIR 
+  41 A                 ********************************** 
+  42 A                 *PROGRAMA PRINCIPAL 
+  43 A                 ********************************** 
+  44 A F02C 8680       PGM       LDAA      #$80                  
+  45 A F02E B71039               STAA      OPTION                
+  46 A F031 8610                 LDAA      #$10                  
+  47 A F033 B71030               STAA      ADCTL                 
+  48 A F036 BDF0F9               JSR       TIMER                 
+  49 A F039 F61031               LDAB      ADR1                  
+  50 A F03C D70B                 STAB      $000B                 
+  51 A F03E 8680       SEG       LDAA      #$80                  
+  52 A F040 B71039               STAA      OPTION                
+  53 A F043 8611                 LDAA      #$11                  
+  54 A F045 B71030               STAA      ADCTL                 
+  55 A F048 BDF0F9               JSR       TIMER                 
+  56 A F04B F61032               LDAB      ADR2                  
+  57 A F04E D70C                 STAB      $000C                 
+  58 A F050 8680       TER       LDAA      #$80                  
+
+M68HC11 Absolute Assembler   Version 2.70A:FLOR4.ASC
+
+
+  59 A F052 B71039               STAA      OPTION                
+  60 A F055 8612                 LDAA      #$12                  
+  61 A F057 B71030               STAA      ADCTL                 
+  62 A F05A BDF0F9               JSR       TIMER                 
+  63 A F05D F61033               LDAB      ADR3                  
+  64 A F060 D70D                 STAB      $000D                 
+  65 A F062 8680       CUA       LDAA      #$80                  
+  66 A F064 B71039               STAA      OPTION                
+  67 A F067 8613                 LDAA      #$13                  
+  68 A F069 B71030               STAA      ADCTL                 
+  69 A F06C BDF0F9               JSR       TIMER                 
+  70 A F06F F61034               LDAB      ADR4                  
+  71 A F072 D70E                 STAB      $000E                 
+  72 A                 *********************************** 
+  73 A                 *RUTINA DECOMPARACION 
+  74 A                 ************************************ 
+  75 A F074 C680                 LDAB      #$80                  
+  76 A F076 D10B                 CMPB      $000B                 
+  77 A F078 2545                 BLO       PRE1                  
+  78 A F07A 2743                 BEQ       PRE1                  
+  79 A F07C 181D0080             BCLR      $00,Y,#$80            
+  80 A F080 B61000               LDAA      PORTA                 
+  81 A F083 9710                 STAA      $0010                 
+  82 A F085 8640       S2        LDAA      #$40                  
+  83 A F087 910C                 CMPA      $000C                 
+  84 A F089 2D40                 BLT       PRE2                  
+  85 A F08B 181D0040             BCLR      $00,Y,#$40            
+  86 A F08F B61000               LDAA      PORTA                 
+  87 A F092 9711                 STAA      $0011                 
+  88 A F094 8630       S3        LDAA      #$30                  
+  89 A F096 910D                 CMPA      $000D                 
+  90 A F098 2F3D                 BLE       PRE3                  
+  91 A F09A 181D0020             BCLR      $00,Y,#$20            
+  92 A F09E B61000               LDAA      PORTA                 
+  93 A F0A1 9712                 STAA      $0012                 
+  94 A F0A3 8620       S4        LDAA      #$20                  
+  95 A F0A5 910E                 CMPA      $000E                 
+  96 A F0A7 2D3A                 BLT       PRE4                  
+  97 A F0A9 181D0010             BCLR      $00,Y,#$10            
+  98 A F0AD B61000               LDAA      PORTA                 
+  99 A F0B0 9713                 STAA      $0013                 
+ 100 A F0B2 9610                 LDAA      $0010                 
+ 101 A F0B4 9A11                 ORAA      $0011                 
+ 102 A F0B6 9A12                 ORAA      $0012                 
+ 103 A F0B8 9A13                 ORAA      $0013                 
+ 104 A F0BA 970F                 STAA      $000F                 
+ 105 A F0BC 7EF02C               JMP       PGM                   
+ 106 A                 *********************************** 
+ 107 A                 *RUTINA DE PRENDIDO 
+ 108 A                 *********************************** 
+ 109 A F0BF 181C0080   PRE1      BSET      $00,Y,#$80            
+ 110 A F0C3 B61000               LDAA      PORTA                 
+ 111 A F0C6 9710                 STAA      $0010                 
+ 112 A F0C8 7EF085               JMP       S2                    
+ 113 A F0CB 181C0040   PRE2      BSET      $00,Y,#$40            
+ 114 A F0CF B61000               LDAA      PORTA                 
+ 115 A F0D2 9711                 STAA      $0011                 
+ 116 A F0D4 7EF094               JMP       S3                    
+
+M68HC11 Absolute Assembler   Version 2.70A:FLOR4.ASC
+
+
+ 117 A F0D7 181C0020   PRE3      BSET      $00,Y,#$20            
+ 118 A F0DB B61000               LDAA      PORTA                 
+ 119 A F0DE 9712                 STAA      $0012                 
+ 120 A F0E0 7EF0A3               JMP       S4                    
+ 121 A F0E3 181C0010   PRE4      BSET      $00,Y,#$10            
+ 122 A F0E7 B61000               LDAA      PORTA                 
+ 123 A F0EA 9713                 STAA      $0013                 
+ 124 A F0EC 9610                 LDAA      $0010                 
+ 125 A F0EE 9A11                 ORAA      $0011                 
+ 126 A F0F0 9A12                 ORAA      $0012                 
+ 127 A F0F2 9A13                 ORAA      $0013                 
+ 128 A F0F4 970F                 STAA      $000F                 
+ 129 A F0F6 7EF02C               JMP       PGM                   
+ 130 A                 *********************************** 
+ 131 A                 *TIMER 
+ 132 A                 *********************************** 
+ 133 A F0F9 CE000F     TIMER     LDX       #$000F                
+ 134 A F0FC 09         OTVZ      DEX                             
+ 135 A F0FD 26FD                 BNE       OTVZ                  
+ 136 A F0FF 39                   RTS                             
+ 137 A                 *********************************** 
+ 138 A F100 B6102E     PREG      LDAA      SCSR                  *LECTURA A SCSR PARA DESHABILITAR BANDAERA DE RDRF DE SCSR 
+ 139 A F103 B6102F               LDAA      SCDR                  
+ 140 A F106 8101                 CMPA      #$01                  
+ 141 A F108 2623                 BNE       FIN1                  
+ 142 A F10A 18CE000B   TRANS     LDY       #$000B                
+ 143 A F10E B6102E     LIMA      LDAA      SCSR                  
+ 144 A F111 8480                 ANDA      #$80                  
+ 145 A F113 2603                 BNE       RITA                  
+ 146 A F115 7EF10E               JMP       LIMA                  
+ 147 A F118 18E600     RITA      LDAB      $00,Y                 
+ 148 A F11B F7102F               STAB      SCDR                  
+ 149 A F11E 1808                 INY                             
+ 150 A F120 188C0010             CPY       #$0010                
+ 151 A F124 26E8                 BNE       LIMA                  
+ 152 A F126 18CE1000             LDY       #$1000                
+ 153 A F12A 7EF15E               JMP       FIN                   
+ 154 A F12D 8103       FIN1      CMPA      #$03                  
+ 155 A F12F 262D                 BNE       FIN                   
+ 156 A F131 7EF145               JMP       REP                   
+ 157 A F134 B6102E     OT        LDAA      SCSR                  
+ 158 A F137 B6102F               LDAA      SCDR                  
+ 159 A F13A 8101                 CMPA      #$01                  
+ 160 A F13C 2603                 BNE       MAS                   
+ 161 A F13E 7EF10A               JMP       TRANS                 
+ 162 A F141 8103       MAS       CMPA      #$03                  
+ 163 A F143 26EF                 BNE       OT                    
+ 164 A F145 C600       REP       LDAB      #$00                  
+ 165 A F147 CA0F                 ORAB      #$0F                  
+ 166 A F149 F71000               STAB      PORTA                 
+ 167 A F14C B6102E     QUITO     LDAA      SCSR                  
+ 168 A F14F 8480                 ANDA      #$80                  
+ 169 A F151 2603                 BNE       ROSA                  
+ 170 A F153 7EF14C               JMP       QUITO                 
+ 171 A F156 C603       ROSA      LDAB      #$03                  
+ 172 A F158 F7102F               STAB      SCDR                  
+ 173 A F15B 7EF134               JMP       OT                    
+ 174 A F15E 3B         FIN       RTI                             
+
+M68HC11 Absolute Assembler   Version 2.70A:FLOR4.ASC
+
+
+ 175 A                 *********************************** 
+ 176 A                           END       $F000                 
+
+SYMBOL TABLE:  Total Entries=   40
+
+ADCTL               1030    PRE1                F0BF
+ADR1                1031    PRE2                F0CB
+ADR2                1032    PRE3                F0D7
+ADR3                1033    PRE4                F0E3
+ADR4                1034    PREG                F100
+BAUD                102B    QUITO               F14C
+CUA                 F062    REP                 F145
+DDRD                1009    RITA                F118
+FIN                 F15E    ROSA                F156
+FIN1                F12D    S2                  F085
+HPRIO               103C    S3                  F094
+LIMA                F10E    S4                  F0A3
+MAS                 F141    SCCR1               102C
+OPTION              1039    SCCR2               102D
+OT                  F134    SCDR                102F
+OTVZ                F0FC    SCSR                102E
+PACTL               1026    SEG                 F03E
+PGM                 F02C    TER                 F050
+PORTA               1000    TIMER               F0F9
+PORTD               1008    TRANS               F10A
+
+Total errors: 0

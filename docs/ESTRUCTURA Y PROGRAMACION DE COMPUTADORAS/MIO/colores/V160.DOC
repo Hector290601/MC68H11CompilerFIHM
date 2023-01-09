@@ -1,0 +1,174 @@
+NEW FEATURES / FIXES
+
+V1.60, June 1992
+- added setUp/Cursor, setUp/Radix
+- added Quit/Shell to DOS
+- default video option is now -d0
+- CVP.EXE patcher included for patch releases
+- COPYATTR.EXE included to copy color settings from one model to others
+
+	eg. >copy avsim05.ovr avsim05.old	; just in case
+	    >setcolor avsim05 -c0               ; select colors
+	    >copyattr avsim05 avsim05 a bcdefg
+	    ; copies color settings in model a to b..g
+	    >copyattr 
+	    ; describes syntax of COPYATTR program
+
+	
+V1.50:
+
+- fix:	Lock-up of the simulator on loading large symbol table files 
+	rectified.
+
+- fix:	This concerned I/O files attached to the A/D converter when the 
+	MULT and SCAN bits were set.  If the cycles count between each 
+	read was set to something greater than every 128 cycles,  the 
+	data in the A/D result registers was not consistent with that 
+	supplied by the input file.  This malfunction has now been 
+	corrected.
+
+- fix:	With an illegal opcode interrupt the address of the first 
+	byte of the illegal opcode is now stacked instead of the 
+	address of the second byte.
+ 
+- fix:	Pulse Accumulator Register
+	
+	With bits 5 (PAMOD) and 6 (PAEN) set in the Pulse Accumulator 
+	Control Register, the E-clock signal divided by 64, ANDed with 
+	PA7, now correctly provides a count for the Pulse Accumulator.
+
+		
+V1.38
+
+- fix:	EEPROM Programming sequence fixed
+
+V1.37
+
+- fix:	FDIV operation.
+
+- fix:	I/O output file attached to Baud.
+
+- fix:	write to ADCTL doesn't make read-only warning.
+
+- fix:	remapping REGS in AVMAC11 moves properly.
+
+- fix:	internal breakpoints on EEPROM range no longer visible.
+
+- fix:	SPI IO close didn't allow re-open.
+
+- fix:	SPIF not cleared by write to SPDR.
+
+V1.36
+
+- fix:	Input Capture sets TFLG1 instead of TMSK1.
+
+- fix:	Long command line bug.
+
+- change: both AVPATH & PATH are searched for files in sequence
+
+
+V1.35
+
+- Microsoft mouse / Logitech mouse menus supplied
+
+- support for I/O files  - particularly for SERIAL, SPI and A/D PORTS
+
+	- new I/O option: Rewind (to start of file)
+
+- SERIAL COMMUNICATIONS INTERFACE (SCI):
+
+	Use "Baud" trigger type.  This attaches input/output files to the 
+	SCDR.  Input files are read at the baud rate specified by BAUD. If 
+	SCCR1 M bit is set, then 9 bits are transferred. The first byte is 
+	stripped to bit 0 and loaded into SCCR1 R8 bit. The second byte is 
+	loaded into SCDR. If you do not need this accuracy, select "No" 
+	for 9 Bit transfers - R8 is not modified.
+	
+	PLEASE NOTE that SCCR2 RE bit MUST be set to enable input file 
+	reading. The input file is continuously read at the baud rate when 
+	RE is high. To modulate input flow to simulate  serial bursts, 
+	simply toggle RE (manually or by another I/O file). Output files 
+	work similarly: Opcodes that write to SCDR load the transmit 
+	buffer (shown on-screen as TDR) , clearing SCCR2 TDRE. When the 
+	transmitter is enabled (SCCR2 TE set) and the transmit shift 
+	register is empty (shown on-screen tp the right of TDR), it will 
+	load the contents of TDR (and the 9th bit in SCCR1 if specified) 
+	into the shift register, setting TDRE and clearing TC - if 
+	properly sequenced - by reading SCSR with TC set before the write 
+	to the SCDR. The current baud rate as specified by BAUD is also 
+	loaded into an internal countdown timer. When this times out, the 
+	output file is written and the cycles is repeated, or TC is set.If 
+	SCCR1 M bit is set, two bytes are written - the first will be 00H 
+	or 01H, representing T8 IF you selected "Yes" to 9 Bit transfers. 
+	The TDR byte is always written.
+	
+- SERIAL PERIPHERAL INTERFACE (SPI):
+
+	Use "SPI" trigger type.
+	
+	This attaches input/output files to the SPDR. Files are 
+	transferred at the serial rate specified by SPCR. It is assumed 
+	that the Master mode is selected, since this chip is generating 
+	the serial clock rate. If SPE is high, then with each byte written 
+	to SPDR, an internal counter is loaded and timed out - at which 
+	time the output file is appended with the bytes written to SPDR. 
+	Synchronously, a byte is read from the input file into SPDR and 
+	SPIF set. If a second byte is written before SPIF is set, then 
+	WCOL is set instead. Port D bits 2-5 are involved in SPI 
+	operations. DDRD bits are forced to the appropriate master/ slave 
+	states. If SS is pulled low while the SPI is operating as a 
+	master, then a Mode Fault is invoked.
+	
+- A/D CONVERTER:
+
+	Use "A/D" trigger type. 
+	
+	This attaches the input file to ADR1-4. Files are transferred at 
+	the rate of 1 conversion per 32 cycles. Writing to ADCTL initiates 
+	conversion. 32 cycles later, the first conversion appears in ADR1. 
+	This rate is maintained until ADR4 is filled. Then CCF is set. If 
+	SCAN is clear, the I/O transfer halts until ADCTL is re-written; 
+	however, if SCAN is set, then the input file is continuously read 
+	every 32 cycles. It is assumed that the input file represents 
+	serial samples of whatever channel is selected with CA-CD, as 
+	these bits are ignored by the simulation. If MULT is set, then 8 
+	bytes are read for every 4 conversions. If CC is low, then the 
+	first four bytes (1-4) read are transferred to ADR1-4 
+	respectively.  Conversely, if CC is high, then bytes 5-8 are 
+	stored in ADR1-4 instead.  This arrangement assumes that the input 
+	file represents samples from 8 parallel channels.
+	
+- Colour support:
+
+	use command line switch -c0 for CGA-compatible display
+	                        -c1 for BIOS-compatible display
+
+	eg. AVSIM11 -c0 d
+
+	The utility program SETCOLOR can be used to customize AVSIM colours.
+
+- COM1/COM2 support for I/O files:
+
+	by specifying COM1 (or COM2) as the Input File Name for I/O files 
+	- for Opcode Access (ie POLLED input), AVSIM will wait for each 
+	  char - NOTE that this will 'hang' program execution until a char 
+	  arrives.
+	- for Cycles Access (ie Interrupt driven), AVSIM will 
+	  read char if ready, else continue WITHOUT reading any input.
+
+- Warning messages -
+
+	since a warning message will trap execution, warnings can be disabled
+	by including '-w' in the command line:
+
+	eg. AVSIM11 -w
+
+- Scroll mode / flip key improved:
+
+	- editing contents no longer advances out of a window - it wraps
+	  to the start, unless the window can be scrolled, in which case
+	  it is. In SCROLL mode, same thing, but beeps when it does it.
+	  This narrows the need for scroll mode to large windows that can
+	  be scrolled (I think). Because overtyping leaves the cursor within
+	  that window, the return (FLIP) key performs more satisfactorily.
+

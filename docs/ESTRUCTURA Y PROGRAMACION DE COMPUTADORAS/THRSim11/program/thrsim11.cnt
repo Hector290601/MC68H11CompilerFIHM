@@ -1,0 +1,600 @@
+:Base THRSim11.hlp
+:Title THRSim11 Simulator
+1 Intro=HLP_INHOUD
+1 A quick introduction to get started
+2 A quick introduction to get started=HLP_QUICK_INTRO
+2 Simulate or execute the Example0.asm program=HLP_QUICK_0
+2 Simulate the Example0.asm program
+3 Overview=HLP_QUICK_SIM
+3 Load the source code in the editor=HLP_QUICK_LOAD
+3 Assemble the source code to machine codes=HLP_QUICK_ASS
+3 Enter the appropriate input values=HLP_QUICK_INPUT
+3 Run the program=HLP_QUICK_RUN
+3 Check the output values=HLP_QUICK_OUTPUT
+3 Reset the 68HC11=HLP_QUICK_RESET
+2 More things to learn
+3 What happens when the program contains errors?=HLP_QUICK_ERR
+3 How can I enter my own program?=HLP_QUICK_NEW
+3 How can I slowly step through the execution of the program?=HLP_QUICK_STEP
+3 How can I execute the program until a certain condition?=HLP_QUICK_BREAK
+3 Can I add labels after the program is assembled?=HLP_QUICK_LABEL
+3 Can I minimise the number of windows I need?=HLP_QUICK_CUSTOM
+2 Execute the Example0.asm program on the target board
+3 Overview=HLP_QUICK_TAR
+3 Download the machine code into the target board=HLP_QUICK_TRGLOAD
+3 Enter input values on the target board=HLP_QUICK_TRGINPUT
+3 Run a program on the target board=HLP_QUICK_TRGRUN
+3 Stop the program on the target board=HLP_QUICK_TRGRESET
+3 Check output values on the target board=HLP_QUICK_TRGOUTPUT
+2 More things to learn
+3 How can I slowly step through the execution of a program on the target board?=HLP_QUICK_TRGSTEP
+3 How can I execute a program on the target board until a certain address is reached?=HLP_QUICK_TRGBREAK
+2 Debugging C/C++ programs
+3 Debugging C/C++ programs=HLP_HLL_MAINWINDOW
+1 Windows
+2 Working with simulator or target windows=HLP_WRK_SIMWINDOWS
+2 Register/Pins windows
+3 Working with register/pins windows=HLP_WRK_REGISTERWINDOWS
+3 Select a line=HLP_WRK_SELECT
+3 Search for a line=HLP_WRK_SEARCH
+3 Select more than one line=HLP_WRK_MEERDERESELECTEREN
+3 Alter the value of a line=HLP_WRK_WIJZIGREGISTER
+3 Set a breakpoint on a line=HLP_WRK_ZETBREAKREG
+3 Remove a breakpoint from a line=HLP_WRK_VERWIJDERBREAKREG
+3 Change the notation of a line=HLP_WRK_WIJZIGTALSTELSEL
+3 Remove a line=HLP_WRK_VERWIJDERVELD
+3 Add a removed line=HLP_WRK_TOEVOEGENVELD
+3 Update register and memory windows=HLP_WRK_UPDATELINE
+2 Edit window
+3 Working with the editor=HLP_ALG_EDITOR
+2 List window
+3 Working with the list window=HLP_WRK_LISTWINDOW
+3 Select a line=HLP_WRK_SELECT
+3 Search for a line=HLP_WRK_SEARCH
+3 Set a breakpoint in the list window=HLP_WRK_ZETBREAKASS
+3 Remove a breakpoint from the list window=HLP_WRK_VERWIJDERBREAKASS
+3 Set the program counter in the list window=HLP_WRK_ZETPCASS
+2 C/C++ List Window
+3 Working with the C/C++ List Window=HLP_HLL_LIST
+2 C/C++ Variables Window
+3 Working with the C/C++ Variables Window=HLP_HLL_VARLIST
+2 Disassembler window
+3 Working with the disassembler window=HLP_WRK_DISWINDOW
+3 Select a line=HLP_WRK_SELECT
+3 Search for a line=HLP_WRK_SEARCH
+3 Alter the code in the disassembler window=HLP_WRK_WIJZIGCODE
+3 Set a breakpoint in the disassembler window=HLP_WRK_ZETBREAKDIS
+3 Remove a breakpoint from the disassembler window=HLP_WRK_VERWIJDERBREAKDIS
+3 Set the program counter in the disassembler window=HLP_WRK_ZETPCDIS
+2 Command window
+3 Working with the command window=HLP_WRK_COMMANDWINDOW
+3 Setting the maximal number of lines for the Command Window=HLP_INI_OTHER
+2 Target Register windows
+3 Working with target register windows=HLP_WRK_TRGREGISTERWINDOWS
+3 Select a line=HLP_WRK_SELECT
+3 Search for a line=HLP_WRK_SEARCH
+3 Select more than one line=HLP_WRK_MEERDERESELECTEREN
+3 Alter the value of a line=HLP_WRK_WIJZIGREGISTER
+3 Change the notation of a line=HLP_WRK_WIJZIGTALSTELSEL
+3 Remove a line=HLP_WRK_VERWIJDERVELD
+3 Add a removed line=HLP_WRK_TOEVOEGENVELD
+3 Update register and memory windows=HLP_WRK_UPDATELINE
+2 Target list window
+3 Working with the target list window=HLP_WRK_TRGLISTWINDOW
+3 Select a line=HLP_WRK_SELECT
+3 Search for a line=HLP_WRK_SEARCH
+3 Set a breakpoint in the target list window=HLP_WRK_ZETBREAKASS
+3 Remove a breakpoint from the target list window=HLP_WRK_VERWIJDERBREAKASS
+3 Set the program counter in the target list window=HLP_WRK_ZETPCASS
+2 Target disassembler window
+3 Working with the target disassembler window=HLP_WRK_TRGDISWINDOW
+3 Select a line=HLP_WRK_SELECT
+3 Search for a line=HLP_WRK_SEARCH
+3 Alter the code in the disassembler window=HLP_WRK_WIJZIGCODE
+3 Set a breakpoint in the disassembler window=HLP_WRK_ZETBREAKDIS
+3 Remove a breakpoint from the disassembler window=HLP_WRK_VERWIJDERBREAKDIS
+3 Set the program counter in the disassembler window=HLP_WRK_ZETPCDIS
+2 Target command window
+3 Working with the target command window=HLP_WRK_TRGCOMMANDWINDOW
+2 Target C/C++ List Window
+3 Working with the target C/C++ List Window=HLP_HLL_TARGETLIST
+2 Target C/C++ Variables Window
+3 Working with the Target C/C++ Variables Window=HLP_HLL_TARGETVARLIST
+1 Editor
+2 Overview=HLP_ALG_EDITOR
+2 Edit=HLP_ALG_EDITKEYS
+2 Search/Replace=HLP_ALG_SEARCHKEYS
+2 External Editor=HLP_HLL_EDITOR
+2 Editor Options=HLP_INI_EDIT
+1 THRAss11 Assembler
+2 THRAss11 Overview=HLP_ASS
+2 THRAss11 Assembler options=HLP_ALG_OPTASM
+2 THRAss11 Assembler errors=HLP_ASS_ERROR
+2 THRAss11 Assembler implemention notes=HLP_ASS_IMP
+2 THRAss11 Assembler syntax
+3 Label syntax=HLP_ASS_LABEL
+3 Mnemonic syntax=HLP_ASS_MNEMONIC
+3 Operand syntax=HLP_ASS_OPERAND
+3 Comment syntax=HLP_ASS_COMMENT
+3 Directives
+4 END=HLP_ALG_END
+4 EQU=HLP_ALG_EQU
+4 FCB=HLP_ALG_FCB
+4 FCC=HLP_ALG_FCC
+4 FDB=HLP_ALG_FDB
+4 ORG=HLP_ALG_ORG
+4 RMB=HLP_ALG_RMB
+4 #INCLUDE=HLP_ALG_INCLUDE
+4 DB=HLP_ALG_FCB
+4 DW=HLP_ALG_FDB
+4 DS=HLP_ALG_RMB
+1 Disassembler
+2 Disassembler command=HLP_COM_DISASSEMBLE
+2 Disassembler window=HLP_ALG_DISASSEMBLER
+2 Target disassembler window=HLP_ALG_TRGDISASSEMBLER
+1 GNU as assembler
+2 Debugging GNU as assembler programs=HLP_HLL_AS
+1 GNU gcc C/C++ compiler
+2 Debugging GNU gcc C/C++ programs=HLP_HLL_MAINWINDOW
+1 Target board communications
+2 Overview=HLP_ALG_TARGET
+2 Target connect=HLP_TRG_CONNECT
+2 Target disconnect=HLP_TRG_DISCONNECT
+2 Target connect via USB option=HLP_INI_TARGET_CONNECT
+2 Target communication options=HLP_TRG_OPTIONS
+2 Target custom made window=HLP_TRG_CUSTOMMADE
+2 Target command window communications=HLP_TRG_COMMANDWINDOW
+2 Target general commands
+3 Set target register A=HLP_TRG_CMD_A
+3 Set target register B=HLP_TRG_CMD_B
+3 Set target register C=HLP_TRG_CMD_C
+3 Set target register D=HLP_TRG_CMD_D
+3 Set target register P=HLP_TRG_CMD_P
+3 Set target register S=HLP_TRG_CMD_S
+3 Set target register X=HLP_TRG_CMD_X
+3 Set target register Y=HLP_TRG_CMD_Y
+3 Copy target CPU registers to simulator=HLP_TRG_CMD_RS
+3 Copy simulator CPU registers to target board=HLP_TRG_CMD_RT
+3 Copy target memory to simulator=HLP_TRG_CMD_MS
+3 Copy simulator memory to target board=HLP_TRG_CMD_MT
+3 Copy simulator EEPROM memory to target board=HLP_TRG_CMD_ET
+3 Copy target breakpoints to simulator=HLP_TRG_CMD_BS
+3 Copy simulator breakpoints to target board=HLP_TRG_CMD_BT
+3 Trace one screen full of output=HLP_TRG_CMD_TS
+2 Target EVB commands
+3 Assemble (ASM)=HLP_EVB_CMD_ASM
+3 Block fill (BF)=HLP_EVB_CMD_BF
+3 Set or remove Breakpoint (BR)=HLP_EVB_CMD_BR
+3 Bulk erase EEPROM (BULK)=HLP_EVB_CMD_BULK
+3 Bulk erase EEPROM and CONFIG register=HLP_EVB_CMD_BULKALL
+3 Call subroutine=HLP_EVB_CMD_CALL
+3 Remap EEPROM=HLP_EVB_CMD_EEMOD
+3 Execute (G)=HLP_EVB_CMD_G
+3 Help (HELP)=HLP_EVB_CMD_HELP
+3 Load S19 file (LOAD)=HLP_EVB_CMD_LOAD
+3 Memory Display (MD)=HLP_EVB_CMD_MD
+3 Memory Modify (MM)=HLP_EVB_CMD_MM
+3 Move Memory (MOVE)=HLP_EVB_CMD_MOVE
+3 Proceed after breakpoint (P)=HLP_EVB_CMD_P
+3 Register Modify (RM)=HLP_EVB_CMD_RM
+3 Stop at address (STOPAT)=HLP_EVB_CMD_STOPAT
+3 Trace (T)=HLP_EVB_CMD_T
+3 Transparent mode (TM)=HLP_EVB_CMD_TM
+3 Verify Memory (VERIFY)=HLP_EVB_CMD_VERIFY
+3 XBOOT=HLP_EVB_CMD_XBOOT
+2 Target EVM commands
+3 Assemble (ASM)=HLP_EVM_CMD_ASM
+3 Block fill (BF)=HLP_EVM_CMD_BF
+3 Set Breakpoint (BR)=HLP_EVM_CMD_BR
+3 Bulk erase EEPROM (BULK)=HLP_EVM_CMD_BULK
+3 Check EEPROM (CHCK)=HLP_EVM_CMD_CHCK
+3 Copy EEPROM (COPY)=HLP_EVM_CMD_COPY
+3 Erase EEPROM (ERASE)=HLP_EVM_CMD_ERASE
+3 Execute (G)=HLP_EVM_CMD_G
+3 Help (HELP)=HLP_EVM_CMD_HELP
+3 Load S19 file (LOAD)=HLP_EVM_CMD_LOAD
+3 Memory Display (MD)=HLP_EVM_CMD_MD
+3 Memory Modify (MM)=HLP_EVM_CMD_MM
+3 Remove Breakpoint (NOBR)=HLP_EVM_CMD_NOBR
+3 Proceed after breakpoint (P)=HLP_EVM_CMD_P
+3 Program EEPROM (PROG)=HLP_EVM_CMD_PROG
+3 Register Display (RD)=HLP_EVM_CMD_RD
+3 Register Modify (RM)=HLP_EVM_CMD_RM
+3 Set speed of host port (SPEED)=HLP_EVM_CMD_SPEED
+3 Trace (T)=HLP_EVM_CMD_T
+3 Transparent mode (TM)=HLP_EVM_CMD_TM
+3 Verify EEPROM (VERF)=HLP_EVM_CMD_VERF
+2 Target windows
+2 Target CPU registers=HLP_TRG_CPUREGISTERS
+2 Target I/O port registers=HLP_TRG_POORTEN
+2 Target timer registers=HLP_TRG_TIMER
+2 Target serial port registers=HLP_TRG_SERIEEL
+2 Target pulse accumulator registers=HLP_TRG_PULSEACCU
+2 Target AD converter registers=HLP_TRG_ADCONVERTER
+2 Target handshake registers=HLP_TRG_HANDSHAKE
+2 Target other registers=HLP_TRG_OTHER
+2 Target memory list=HLP_TRG_LISTVANBYTES
+2 Target memory dump=HLP_TRG_MEMORYDUMP
+2 Target stack view=HLP_TRG_STACK
+3 Target disassembler window
+4 Working with the target disassembler window=HLP_WRK_TRGDISWINDOW
+4 Select a line=HLP_WRK_SELECT
+4 Search for a line=HLP_WRK_SEARCH
+4 Alter the code in the disassembler window=HLP_WRK_WIJZIGCODE
+4 Set a breakpoint in the disassembler window=HLP_WRK_ZETBREAKDIS
+4 Remove a breakpoint from the disassembler window=HLP_WRK_VERWIJDERBREAKDIS
+4 Set the program counter in the disassembler window=HLP_WRK_ZETPCDIS
+3 Target command window
+4 Working with the command window=HLP_WRK_TRGCOMMANDWINDOW
+3 Target register windows
+4 Working with target register windows=HLP_WRK_TRGREGISTERWINDOWS
+4 Select a line=HLP_WRK_SELECT
+4 Search for a line=HLP_WRK_SEARCH
+4 Select more than one line=HLP_WRK_MEERDERESELECTEREN
+4 Alter the value of a line=HLP_WRK_WIJZIGREGISTER
+4 Change the notation of a line=HLP_WRK_WIJZIGTALSTELSEL
+4 Remove a line=HLP_WRK_VERWIJDERVELD
+4 Add a removed line=HLP_WRK_TOEVOEGENVELD
+4 Update a line=HLP_WRK_UPDATELINE
+1 Labels
+2 Overview=HLP_LAB
+2 Menu items
+3 Set label menu item=HLP_LAB_ZETTEN
+3 Remove label menu item=HLP_LAB_VERWIJDEREN
+3 Remove all labels menu item=HLP_LAB_VERWIJDERALLE
+3 Set standard labels menu item=HLP_LAB_STANDAARDLABELS
+3 label window menu item=HLP_LAB_LABELWINDOW
+2 Commands
+3 Set label command=HLP_COM_SETLABEL
+3 Delete label command=HLP_COM_DELETELABEL
+3 Set standard labels command=HLP_COM_SETSTANDAARDLABELS
+3 Delete standard labels command=HLP_COM_DELETESTANDAARDLABELS
+3 Delete all labels command=HLP_COM_DELETEALLLABELS
+3 Print label command=HLP_COM_PRINTLABEL
+3 Print all labels command=HLP_COM_PRINTALLLABELS
+1 Breakpoints
+2 Overview simulator breakpoints=HLP_BRK
+2 Set a breakpoint on a line=HLP_WRK_ZETBREAKREG
+2 Set a breakpoint in a list window=HLP_WRK_ZETBREAKASS
+2 Set a breakpoint in a disassembler window=HLP_WRK_ZETBREAKDIS
+2 Remove a breakpoint from a line=HLP_WRK_VERWIJDERBREAKREG
+2 Remove a breakpoint from a list window=HLP_WRK_VERWIJDERBREAKASS
+2 Remove a breakpoint form a disassembler window=HLP_WRK_VERWIJDERBREAKDIS
+2 Overview target breakpoints=HLP_TRGBRK
+2 Set a breakpoint in a list window=HLP_WRK_ZETBREAKASS
+2 Set a breakpoint in a disassembler window=HLP_WRK_ZETBREAKDIS
+2 Remove a breakpoint from a list window=HLP_WRK_VERWIJDERBREAKASS
+2 Remove a breakpoint form a disassembler window=HLP_WRK_VERWIJDERBREAKDIS
+2 Menu items
+3 Set breakpoint menu item=HLP_BRK_ZETTEN
+3 Remove breakpoint menu item=HLP_BRK_VERWIJDEREN
+3 Remove all breakpoints menu item=HLP_BRK_VERWIJDERALLE
+3 Breakpoint window menu item=HLP_BRK_BREAKPOINTWINDOW
+3 Target set breakpoint menu item=HLP_BRK_TRGVERWIJDEREN
+3 Target remove breakpoint menu item=HLP_BRK_TRGVERWIJDEREN
+3 Target remove all breakpoints menu item=HLP_BRK_TRGVERWIJDERALLE
+3 Target breakpoint list menu item=HLP_BRK_TRGBREAKPOINTWINDOW
+2 Commands
+3 Set breakpoint command=HLP_COM_SETBREAKPOINT
+3 Delete breakpoint command=HLP_COM_DELETEBREAKPOINT
+3 Delete all breakpoints command=HLP_COM_DELETEALLBREAKPOINTS
+3 Print breakpoint command=HLP_COM_PRINTBREAKPOINT
+3 Print all breakpoints command=HLP_COM_PRINTALLBREAKPOINTS
+2 Target EVB commands
+3 Set or remove breakpoint (BR) command=HLP_EVB_CMD_BR
+3 Proceed after breakpoint (P) command=HLP_EVB_CMD_P
+2 Target EVM commands
+3 Set breakpoint (BR) command=HLP_EVM_CMD_BR
+3 Remove breakpoint (NOBR) command=HLP_EVM_CMD_NOBR
+3 Proceed thru breakpoint (P) command=HLP_EVM_CMD_P
+1 Options
+2 Assembler options=HLP_ALG_OPTASM
+2 Simulator options=HLP_ALG_OPTSIM
+2 Target communication options=HLP_TRG_OPTIONS
+2 Statusbar options=HLP_ALG_OPTSTATUSBAR
+2 Font options=HLP_ALG_OPTFONT
+2 Memory Configuration options=HLP_ALG_MEMORYCONFIG
+2 THRSim11_options.txt file
+3 Overview=HLP_INI
+3 Changing the memory map=HLP_INI_MEMMAP
+3 Changing the CONFIG register=HLP_INI_CONFIG
+3 Editor options=HLP_INI_EDIT
+3 GNU tools options=HLP_INI_GNU
+3 Serial window options=HLP_INI_SERIAL
+3 Target connect option=HLP_INI_TARGET_CONNECT
+3 Initializing PC, SP, and D=HLP_INI_OTHER
+3 Setting the maximal number of lines for the Command Window=HLP_INI_OTHER
+3 Setting the maximal number of characters in a name for the Memory List Windows=HLP_INI_OTHER
+1 Commands
+2 Overview=HLP_COM_MAIN
+2 General commands
+3 Run=HLP_COM_RUN
+3 Go=HLP_COM_RUN
+3 Stop=HLP_COM_STOP
+3 Step=HLP_COM_STEP
+3 Run until=HLP_COM_RUNUNTIL
+3 Step until=HLP_COM_STEPUNTIL
+3 Assembler=HLP_COM_ASSEMBLER
+3 Disassemble=HLP_COM_DISASSEMBLE
+2 Commands for timing
+3 Clock cycles=HLP_COM_CLOCK
+3 Print simulated time=HLP_COM_PST
+3 Print E clock period=HLP_COM_PECP
+3 Set E clock period=HLP_COM_SECP
+2 Commands for loading files
+3 Edit=HLP_COM_EDIT
+3 Load and assemble ASM source=HLP_COM_LOADSOURCE
+3 Load ELF including debug info=HLP_COM_LOADELF
+3 Load S19 machine code=HLP_COM_LOADFILE
+3 Load ELF machine code=HLP_COM_LOADMEMELF
+3 Load commands=HLP_COM_LOADCOMMANDS
+3 Load map=HLP_COM_LOADMAP
+3 Load list=HLP_COM_LOADLIST
+2 Commands concerning labels
+3 Set label=HLP_COM_SETLABEL
+3 Delete label=HLP_COM_DELETELABEL
+3 Set standard labels=HLP_COM_SETSTANDAARDLABELS
+3 Delete standard labels=HLP_COM_DELETESTANDAARDLABELS
+3 Delete all labels=HLP_COM_DELETEALLLABELS
+3 Print label=HLP_COM_PRINTLABEL
+3 Print all labels=HLP_COM_PRINTALLLABELS
+2 Commands concerning breakpoints
+3 Set breakpoint=HLP_COM_SETBREAKPOINT
+3 Delete breakpoint=HLP_COM_DELETEBREAKPOINT
+3 Delete all breakpoints=HLP_COM_DELETEALLBREAKPOINTS
+3 Print breakpoint=HLP_COM_PRINTBREAKPOINT
+3 Print all breakpoints=HLP_COM_PRINTALLBREAKPOINTS
+2 Commands concerning memory
+3 Print name=HLP_COM_PRINTNAME
+3 Print all names=HLP_COM_PRINTALLNAMES
+3 Print memory=HLP_COM_PRINTMEMORY
+3 Print stack=HLP_COM_PRINTSTACK
+3 Print registers=HLP_COM_PRINTREGISTERS
+3 Print pins=HLP_COM_PRINTPINS
+3 Set memory=HLP_COM_SETMEMORY
+3 Fill memory=HLP_COM_FILLMEMORY
+3 Clear memory=HLP_COM_CLEARMEMORY
+3 Map memory=HLP_COM_MAPMEMORY
+2 Commands concerning numerical systems
+3 Hexadecimal=HLP_COM_HEXADECIMAL
+3 Signed decimal=HLP_COM_DECIMAL
+3 Unsigned decimal=HLP_COM_DECIMALUNSIGNED
+3 Octal=HLP_COM_OCTAL
+3 Binary=HLP_COM_BINARY
+3 ASCII=HLP_COM_ASCII
+3 Hexadecimal all=HLP_COM_HEXADECIMALALL
+3 Signed decimal all=HLP_COM_DECIMALALL
+3 Unsigned decimal all=HLP_COM_DECIMALUNSIGNEDALL
+3 Octal all=HLP_COM_OCTALALL
+3 Binary all=HLP_COM_BINARYALL
+3 ASCII all=HLP_COM_ASCIIALL
+2 Commands for general information
+3 About=HLP_COM_ABOUT
+3 Info=HLP_COM_INFO
+3 Help=HLP_COM_HELP
+2 External commands
+3 !command=HLP_COM_SHELL
+2 Verification commands
+3 Verify=HLP_COM_VERIFY
+3 Verify contains=HLP_COM_VERIFYCONTAINS
+3 Verify not=HLP_COM_VERIFYNOT
+3 Verify contains not=HLP_COM_VERIFYCONTAINSNOT
+2 Other commands
+3 Record=HLP_COM_RECORD
+3 Sleep=HLP_COM_SLEEP
+3 Target=HLP_COM_TARGET
+3 Send windows message=HLP_COM_WINDOWSMESSAGE
+1 Overview of buttons and menu items
+2 Overview of buttons and menu items=HLP_ALG_MAINWINDOW
+1 Toolbar
+2 Overview=HLP_ALG_TOOLBAR
+3 Open button=HLP_ALG_OPENEN
+3 Save button=HLP_ALG_OPSLAAN
+3 New button=HLP_ALG_NIEUW
+3 Assemble button=HLP_ALG_ASSEMBLEREN
+3 Download button=HLP_ALG_DOWNLOAD
+3 Print button=HLP_ALG_PRINT
+3 Run button=HLP_ALG_RUN
+3 Step button=HLP_ALG_STEP
+3 Run until button=HLP_ALG_RUNUNTIL
+3 Run from button=HLP_ALG_RUNFROM
+3 Stop button=HLP_ALG_STOP
+3 Custom Made Window button=HLP_REG_CUSTOMMADE
+3 Set PC button=HLP_ALG_SETPC
+3 Reset 68HC11 button=HLP_PIN_RESET
+3 Undo button=HLP_ALG_EDITKEYS
+3 Cut button=HLP_ALG_EDITKEYS
+3 Copy button=HLP_ALG_EDITKEYS
+3 Paste button=HLP_ALG_EDITKEYS
+3 Find button=HLP_ALG_SEARCHKEYS
+3 Find Next button=HLP_ALG_SEARCHKEYS
+3 Cascade button=HLP_ALG_ARRANGE
+3 Tile button=HLP_ALG_ARRANGE
+3 Help button=HLP_ALG_HELP
+3 About button=HLP_ALG_INFORMATIE
+1 Target Toolbar
+3 Target run button=HLP_ALG_TRGRUN
+3 Target step button=HLP_ALG_TRGSTEP
+3 Target run until button=HLP_ALG_TRGRUNUNTIL
+3 Target run from button=HLP_ALG_TRGRUNFROM
+3 Target stop button=HLP_ALG_TRGSTOP
+2 Target custom made button=HLP_TRG_CUSTOMMADE
+3 Target set P button=HLP_ALG_TRGSETPC
+1 Menu
+2 Overview=HLP_MNU_ALL
+2 File menu
+3 Overview=HLP_MNU_BESTAND
+3 New menu item=HLP_ALG_NIEUW
+3 New GNU gcc or as source menu item=HLP_ALG_NIEUW_GCC
+3 Open menu item=HLP_ALG_OPENEN
+3 Download menu item=HLP_ALG_DOWNLOAD
+3 Save menu item=HLP_ALG_OPSLAAN
+3 Save as menu item=HLP_ALG_OPSLAANALS
+3 Print menu item=HLP_ALG_PRINT
+3 Assemble menu item=HLP_ALG_ASSEMBLEREN
+3 Exit menu item=HLP_ALG_STOPPEN
+3 Options menu
+4 Overview=HLP_ALG_OPTIES
+4 Assembler options menu item=HLP_ALG_OPTASM
+4 Simulator options menu item=HLP_ALG_OPTSIM
+4 Target communication options menu item=HLP_TRG_OPTIONS
+4 Statusbar options menu item=HLP_ALG_OPTSTATUSBAR
+4 Font options menu item=HLP_ALG_OPTFONT
+4 Memory Configuration Tool menu item=HLP_ALG_MEMORYCONFIG
+2 Edit menu
+3 Overview=HLP_MNU_EDIT
+3 Undo menu item=HLP_ALG_EDITKEYS
+3 Cut menu item=HLP_ALG_EDITKEYS
+3 Copy menu item=HLP_ALG_EDITKEYS
+3 Paste menu item=HLP_ALG_EDITKEYS
+3 Delete menu item=HLP_ALG_EDITKEYS
+2 Search menu
+3 Overview=HLP_MNU_SEARCH
+3 Find menu item=HLP_ALG_SEARCHKEYS
+3 Replace menu item=HLP_ALG_SEARCHKEYS
+3 Search Again menu item=HLP_ALG_SEARCHKEYS
+2 View menu
+3 Overview=HLP_MNU_DISPLAY
+3 Toolbar menu item=HLP_ALG_TOOLBAR
+3 Statusbar menu item=HLP_ALG_STATUSBAR
+3 Number of Clock Cycles menu item=HLP_REG_CLOCKCYCLES
+3 High Level Language Variables menu item=HLP_HLL_VARS
+3 Custom Made Window menu item=HLP_REG_CUSTOMMADE
+3 Command Window menu item=HLP_WRK_COMMANDWINDOW
+3 Label List menu item=HLP_LAB_LABELWINDOW
+3 Breakpoint List menu item=HLP_BRK_BREAKPOINTWINDOW
+3 Disassembler menu item=HLP_ALG_DISASSEMBLER
+3 I/O Box menu item=HLP_EXT_EVMKAST
+3 Sliders E Port menu item=HLP_EXT_REGELPANEEL
+3 Resistance Measurement menu item=HLP_EXT_WEERSTANDSMETING
+3 Capacity Measurement menu item=HLP_EXT_CAPACITEITSMETING
+3 Serial Receiver menu item=HLP_EXT_SERIELEONTVANGER
+3 Serial Transmitter menu item=HLP_EXT_SERIELEZENDER
+3 Registers submenu
+4 CPU Registers menu item=HLP_REG_CPUREGISTERS
+4 Ports menu item=HLP_REG_POORTEN
+4 Timer menu item=HLP_REG_TIMER
+4 Serial menu item=HLP_REG_SERIEEL
+4 Pulse Accumulator menu item=HLP_REG_PULSEACCU
+4 AD Converter menu item=HLP_REG_ADCONVERTER
+4 Handshake menu item=HLP_REG_HANDSHAKE
+4 Other Registers menu item=HLP_REG_OTHER
+3 Pins submenu
+4 PA Pins menu item=HLP_PIN_PAPINNEN
+4 PB Pins menu item=HLP_PIN_PBPINNEN
+4 PC Pins menu item=HLP_PIN_PCPINNEN
+4 PD Pins menu item=HLP_PIN_PDPINNEN
+4 PE Pins menu item=HLP_PIN_PEPINNEN
+4 Other Pins menu item=HLP_PIN_OVERIGEPINNEN
+3 Memory submenu
+4 Memory List menu item=HLP_REG_LISTVANBYTES
+4 Memory Dump menu item=HLP_REG_MEMORYDUMP
+4 Stack menu item=HLP_REG_STACK
+4 Memory Map menu item=HLP_ALG_MEMORYMAP
+4 Memory Configuration menu item=HLP_ALG_MEMORYCONFIG
+2 Target menu
+3 Target Board Toolbar menu item=HLP_ALG_TRGTOOLBAR
+3 Target Connect menu item=HLP_TRG_CONNECT
+3 Target Disconnect menu item=HLP_TRG_DISCONNECT
+3 Target Communication Options menu options=HLP_TRG_OPTIONS
+3 Target Download menu item=HLP_ALG_DOWNLOAD
+3 Target High Level Language Variables menu item=HLP_HLL_TARGETVARS
+3 Target Custom Made Window menu item=HLP_TRG_CUSTOMMADE
+3 Target Command Window menu item=HLP_WRK_TRGCOMMANDWINDOW
+3 Target Breakpoint List menu item=HLP_BRK_TRGBREAKPOINTWINDOW
+3 Target Disassembler menu item=HLP_ALG_TRGDISASSEMBLER
+3 Target Registers submenu
+4 Target CPU Registers menu item=HLP_TRG_CPUREGISTERS
+4 Target Ports menu item=HLP_TRG_POORTEN
+4 Target Timer menu item=HLP_TRG_TIMER
+4 Target Serial menu item=HLP_TRG_SERIEEL
+4 Target Pulse Accumulator menu item=HLP_TRG_PULSEACCU
+4 Target AD Converter menu item=HLP_TRG_ADCONVERTER
+4 Target Handshake menu item=HLP_TRG_HANDSHAKE
+4 Target Other registers menu item=HLP_TRG_OTHER
+3 Target Memory submenu
+4 Target Memory List menu item=HLP_TRG_LISTVANBYTES
+4 Target Memory Dump menu item=HLP_TRG_MEMORYDUMP
+4 Target Stack menu item=HLP_TRG_STACK
+3 Target Copy submenu
+4 Copy Target CPU Registers to Simulator menu item=HLP_TRG_CMD_RS
+4 Copy Simulator CPU Registers to Target menu item=HLP_TRG_CMD_RT
+4 Copy Target Memory to Simulator menu item=HLP_TRG_CMD_MS
+4 Copy Simulator Memory to Target menu item=HLP_TRG_CMD_MT
+4 Copy Simulator EEPROM Memory to Target menu item=HLP_TRG_CMD_ET
+4 Copy Target Breakpoints to Simulator menu item=HLP_TRG_CMD_BS
+4 Copy Simulator PC Breakpoints to Target menu item=HLP_TRG_CMD_BT
+2 Execute menu
+3 Overview=HLP_MNU_UITVOEREN
+3 Run menu item=HLP_ALG_RUN
+3 Run until menu item=HLP_ALG_RUNUNTIL
+3 Run from menu item=HLP_ALG_RUNFROM
+3 Step menu item=HLP_ALG_STEP
+3 Stop menu item=HLP_ALG_STOP
+3 Reset 68HC11 menu item=HLP_PIN_RESET
+3 Target Run menu option=HLP_ALG_TRGRUN
+3 Target Run until menu item=HLP_ALG_TRGRUNUNTIL
+3 Target Run from menu item=HLP_ALG_TRGRUNFROM
+3 Target Step menu item=HLP_ALG_TRGSTEP
+3 Target Stop menu item=HLP_ALG_TRGSTOP
+2 Label menu
+3 Overview=HLP_MNU_LABEL
+3 Set label menu item=HLP_LAB_ZETTEN
+3 Remove label menu item=HLP_LAB_VERWIJDEREN
+3 Remove all labels menu item=HLP_LAB_VERWIJDERALLE
+3 Set standard labels menu item=HLP_LAB_STANDAARDLABELS
+3 Label window menu item=HLP_LAB_LABELWINDOW
+2 Breakpoint menu
+3 Overview=HLP_MNU_BREAKPOINT
+3 Set breakpoint menu item=HLP_BRK_ZETTEN
+3 Remove breakpoint menu item=HLP_BRK_VERWIJDEREN
+3 Remove all breakpoints menu item=HLP_BRK_VERWIJDERALLE
+3 Breakpoint window menu item=HLP_BRK_BREAKPOINTWINDOW
+3 Target Set breakpoint menu item=HLP_BRK_TRGZETTEN
+3 Target Remove breakpoint menu item=HLP_BRK_TRGVERWIJDEREN
+3 Target Remove All breakpoints menu item=HLP_BRK_TRGVERWIJDERALLE
+3 Target List breakpoints menu item=HLP_BRK_TRGBREAKPOINTWINDOW
+2 Connect menu
+3 Overview=HLP_MNU_CONNECT
+3 Info menu item=HLP_EXT_COMCOMPONENTS
+3 Rescan for installed components=HLP_EXT_RESCAN
+3 Connect menu item=HLP_EXT_CONNECT
+2 Window menu
+3 Overview=HLP_MNU_WINDOW
+3 Cascade windows menu item=HLP_ALG_ARRANGE
+3 Tile windows menu item=HLP_ALG_ARRANGE
+3 Tile windows horizontal menu item=HLP_ALG_ARRANGE
+3 Arange icons menu item=HLP_ALG_ARRANGE
+3 Close all windows menu item=HLP_ALG_ARRANGE
+2 Help menu
+3 Overview=HLP_MNU_HELP
+3 Contents menu item=HLP_ALG_HELP
+3 More information menu item=HLP_MAIL
+3 About menu item=HLP_ALG_INFORMATIE
+1 Statusbar
+2 Overview=HLP_ALG_STATUSBAR
+2 Options=HLP_ALG_OPTSTATUSBAR
+1 External boxes
+2 Overview=HLP_EXT_KASTEN
+2 I/O box=HLP_EXT_EVMKAST
+2 Sliders E port=HLP_EXT_REGELPANEEL
+2 Resistance measurement=HLP_EXT_WEERSTANDSMETING
+2 Capacity and frequency measurement=HLP_EXT_CAPACITEITSMETING
+2 The serial receiver=HLP_EXT_SERIELEONTVANGER
+2 The serial transmitter=HLP_EXT_SERIELEZENDER
+1 External components
+2 Available external components=HLP_EXT_COMCOMPONENTS
+2 Connecting external components=HLP_EXT_CONNECT
+1 Example ASM programs
+2 Overview=HLP_EXAMPLE
+2 Example0.asm=HLP_EXAMPLE0
+2 Example1.asm=HLP_EXAMPLE1
+2 Example2.asm=HLP_EXAMPLE2
+1 Example GNU as programs
+2 Overview=HLP_HLL_AS
+1 Example C/C++ programs
+2 Overview=HLP_HLL_MAINWINDOW
+1 Ordering Information
+2 Ordering information=HLP_ORDER
+1 Frequently asked questions
+2 FAQ=HLP_FAQ

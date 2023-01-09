@@ -1,0 +1,12 @@
+The file Capacity.s19 contains a capacity measurement program.
+
+DEMO:
+Choose menu View I/O_Box
+Choose menu View Capacity_Measurement
+Choose menu File Open Capacity.s19 (first select *.s19)
+Choose menu Execute Run
+
+If you want you can set another capacity value (click on the 
+button near capacitor Cx).
+You have to choose menu Execute Reset 68HC11 to start running 
+again...

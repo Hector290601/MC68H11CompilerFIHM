@@ -1,0 +1,90 @@
+MAIN  
+        JSR    INICIA
+        
+INICIO  CLR    U4
+NO_S1   CLR    U3
+NO_S    CLR    U2
+        CLR    U1 
+
+ 
+
+
+OTRO    
+        LDDA    #'?
+        STAA    ORDEN
+       
+CICLO
+        LDAA    ORDEN
+        CMPA    #'?
+        BEQ     CICLO
+        LDAB    U1
+        BNE     CHECA_U2
+        CMPA    #'s
+        BNE     OTRO
+        STAA    U1
+        JMP     OTRO
+
+
+CHECA_U2
+
+        LDAB    U2
+        BNE     CHECA_U3
+        CMPA    #'T
+        BEQ     ES_T
+        CMPA    #'S
+        BEQ     OTRO
+        CLR     U1
+        JMP     OTRO
+        ES_T    STAAU2
+        JMP     OTRO
+
+CHECA_U3
+
+        LDAB    U3
+        BNE     CHECA_U4
+        CMPA    #'A
+        BEQ     ES_A
+        CMPA    #'S
+        BNE     NO_S
+        CLR     U2
+        JMP     OTRO
+
+ES_A
+
+        STAA    U3
+        JMP     OTRO
+
+CHECA_U4
+
+        LDAB    U4
+        BNE     CHECA_T
+        CMPA    #'R
+        BEQ     ES_R
+        CMPA    #'S
+        BNE     NO_S1
+        CLR     U3
+        CLR     U2
+        JMP     OTRO
+
+ES_R
+
+        STAA    U4
+        JMP     OTRO
+ 
+CHECA_T
+
+        CMPA    #'T
+        BEQ     EXITO
+        CMPA    #'S
+        BNE     INICIO
+        CLR     U4
+        CLR     U3
+        CLR     U2
+        JMP     OTRO
+
+EXITO
+        ----
+        ----
+        ----
+        ----
+        JMP        

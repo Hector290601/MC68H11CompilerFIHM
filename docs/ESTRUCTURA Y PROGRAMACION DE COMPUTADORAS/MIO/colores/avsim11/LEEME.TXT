@@ -1,0 +1,2 @@
+Para pantalla a color invocar como:
+AVSIM11 /C1

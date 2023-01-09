@@ -1,0 +1,34 @@
+Burbuja
+
+        DEx
+        DEx
+        DEx
+        DEx
+        DEx
+
+SALTA
+
+        LDY    #$0030
+        LDAA   $00,Y
+        CMPA   $01,Y
+        BLE    No_Intercambia
+        STAA   AUX
+        LDAB   $01,Y
+        STAB   $00,Y
+        STAA   $01,Y
+     
+No_Intercambia
+        
+        INY
+        STY    AUX
+        CPX    AUX
+        BEQ    SALTA
+        DEX
+        BNE    SALTA
+        JMP    FIN
+
+FIN
+        
+        JMP    MAIN  
+       
+       

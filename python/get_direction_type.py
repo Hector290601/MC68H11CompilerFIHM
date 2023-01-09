@@ -1,4 +1,6 @@
 #-*- coding:utf-8 -*-
+import time
+import os
 from get_instrucions_set import *
 
 """
@@ -27,18 +29,30 @@ Return the direction type used on the function as an integrer from 0 to 5 and a 
     +-------------+------------+
 
 """
-
+# get_direction_type {{{ 1
 def get_direction_type(instruction_set, args = ""):
+    #debug purposes only
     print(args, end=": ")
+    # remueve espacios en blanco {{{2
     args = args.replace("  ", "")
     args = args.replace("  ", "")
+    # }}}
+    # remueve comentarios {{{2
     if "*" in args:
         depreciable = args.index("*")
         args = args[:depreciable]
+    # }}}
+    # formateo de cadenas {{{2
+    # separa los argumentos por espacios
     args = args.split(" ")
+    # selecciona el argumento que indica la orden
     instruction = args[0].lower()
+    # }}}
+    # Instruccion inexistente {{{2
     if instruction not in instruction_set:
         return 8, 1
+    # }}}
+    # Separa las tablas de equivalencias por tipo de direccionamiento {{{2
     data = instruction_set[instruction]
     supported_types = {
             "IMM": data[0],
@@ -49,6 +63,7 @@ def get_direction_type(instruction_set, args = ""):
             "INH": data[10],
             "REL": data[12]
             }
+    # }}}
     i = 0
     for arg in args:
         if arg == " " or arg == "":
@@ -59,8 +74,11 @@ def get_direction_type(instruction_set, args = ""):
         if arg == " " or arg == "":
             args.pop(i)
         i = i + 1
+    # Comentario {{{2
     if len(args) == 0:
         return 7
+    # }}}
+    # Inmediato {{{2
     if supported_types["IMM"] != "":
         if len(args) == 2:
             arg = args[-1]
@@ -82,6 +100,8 @@ def get_direction_type(instruction_set, args = ""):
                     if len(arg) <= 4:
                         return 0, 0
                     return 0, 1
+    # }}}
+    # Directo {{{2
     if supported_types["DIR"] != "":
         if len(args) == 2:
             arg = args[-1]
@@ -100,6 +120,8 @@ def get_direction_type(instruction_set, args = ""):
                         pass
                     if len(arg) <= 2:
                         return 1, 0
+    # }}}
+    # Extendido {{{2
     if supported_types["EXT"] != "":
         print(instruction_set[instruction][4], end="")
         if len(args) == 2:
@@ -119,6 +141,8 @@ def get_direction_type(instruction_set, args = ""):
                     if len(arg) <= 4:
                         return 4, 0
                     return 4, 1
+    # }}}
+    # Indexado respecto a X {{{2
     if supported_types["IDX"] != "":
         print(instruction_set[instruction][6], end="")
         if len(args) == 2:
@@ -139,6 +163,8 @@ def get_direction_type(instruction_set, args = ""):
                     if len(arg) <= 4:
                         return 2, 0
                     return 2, 1
+    # }}}
+    # Indexado respecto a Y {{{2
     if supported_types["IDY"] != "":
         print(instruction_set[instruction][8], end="")
         if len(args) == 2:
@@ -159,12 +185,18 @@ def get_direction_type(instruction_set, args = ""):
                     if len(arg) <= 4:
                         return 3, 0
                     return 3, 1
+    # }}}
+    # Inherente {{{2
     if supported_types["INH"] != "":
         print(instruction_set[instruction][10], end="")
         if len(args) == 1:
             return 5, 0
         else:
             return 5,1
+    # }}}
+    #  {{{2
+
+# }}}
 
 if __name__ == "__main__":
     data = get_instrucions_set()
@@ -179,6 +211,8 @@ if __name__ == "__main__":
     print(get_direction_type(data, "LDY #$ABCD  * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "LDY #$ABCDE * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "LDY $ABCD   * ESTO ES UN COMENTARIO"))
+    time.sleep(1.5)
+    os.system("clear")
     print("DIR:")
     print(get_direction_type(data, "ldaa $45    * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "LDAB 11     * ESTO ES UN COMENTARIO"))
@@ -189,6 +223,8 @@ if __name__ == "__main__":
     print(get_direction_type(data, "LDY $AB     * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "LDY $ABCDE  * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "LDY #$AB    * ESTO ES UN COMENTARIO"))
+    time.sleep(1.5)
+    os.system("clear")
     print("EXT:")
     print(get_direction_type(data, "ldaa $457C  * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "LDAB 1531    * ESTO ES UN COMENTARIO"))
@@ -197,6 +233,8 @@ if __name__ == "__main__":
     print(get_direction_type(data, "ADDA $7CB   * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "ANDA $F0B1  * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "LDY $ABCD   * ESTO ES UN COMENTARIO"))
+    time.sleep(1.5)
+    os.system("clear")
     print("IDX:")
     print(get_direction_type(data, "ldaa $457C,X * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "LDAB 151,X  * ESTO ES UN COMENTARIO"))
@@ -205,6 +243,8 @@ if __name__ == "__main__":
     print(get_direction_type(data, "ADDA $7CB,X * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "ANDA $F0B1,X * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "LDY $ABC,X  * ESTO ES UN COMENTARIO"))
+    time.sleep(1.5)
+    os.system("clear")
     print("IDY:")
     print(get_direction_type(data, "ldaa $457C,Y * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "LDAB 151,Y  * ESTO ES UN COMENTARIO"))
@@ -213,6 +253,8 @@ if __name__ == "__main__":
     print(get_direction_type(data, "ADDA $7CB,Y * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "ANDA $F0B1,Y * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "LDY $ABC,Y  * ESTO ES UN COMENTARIO"))
+    time.sleep(1.5)
+    os.system("clear")
     print("INH:")
     print(get_direction_type(data, "NOP         * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "inx         * ESTO ES UN COMENTARIO"))
@@ -226,4 +268,6 @@ if __name__ == "__main__":
     print(get_direction_type(data, "NEGB        * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "NEGE        * ESTO ES UN COMENTARIO"))
     print(get_direction_type(data, "NEGB 12     * ESTO ES UN COMENTARIO"))
+    time.sleep(1.5)
+    os.system("clear")
 

@@ -1,0 +1,164 @@
+
+M68HC11 Absolute Assembler   Version 2.70G:/AVSIM11/LCD.ASC
+
+
+   1 A                 ********************************** 
+   2 A                 *PROGRAMA DE LEDS 
+   3 A                 ********************************** 
+   4 A      1026       PACTL     EQU       $1026                 
+   5 A      1030       ADCTL     EQU       $1030                 
+   6 A      1031       ADR1      EQU       $1031                 
+   7 A      1032       ADR2      EQU       $1032                 
+   8 A      1033       ADR3      EQU       $1033                 
+   9 A      1034       ADR4      EQU       $1034                 
+  10 A      1039       OPTION    EQU       $1039                 
+  11 A 0000                                                      
+  12 A      1000       PORTA     EQU       $1000                 
+  13 A      1008       PORTD     EQU       $1008                 
+  14 A      100A       PORTE     EQU       $100A                 
+  15 A      1002       PORTG     EQU       $1002                 
+  16 A 0000                                                      
+  17 A      1001       DDRA      EQU       $1001                 
+  18 A      1009       DDRD      EQU       $1009                 
+  19 A      1003       DDRG      EQU       $1003                 
+  20 A 0000                                                      
+  21 A      102F       SCDR      EQU       $102F                 
+  22 A      102D       SCCR2     EQU       $102D                 
+  23 A      102E       SCSR      EQU       $102E                 
+  24 A      102C       SCCR1     EQU       $102C                 
+  25 A      102B       BAUD      EQU       $102B                 
+  26 A      103C       HPRIO     EQU       $103C                 
+  27 A      1028       SPCR      EQU       $1028                 
+  28 A      105D       CSCTL     EQU       $105D                 
+  29 A 0000                                                      
+  30 A                 ********************************** 
+  31 A                 *CONFIGURA REGISTROS 
+  32 A                 ********************************** 
+  33 A      E000                 ORG       $E000                 * DIR DE INICIO 
+  34 A E000 8E03FF               LDS       #$03FF                * APUNTADOR DE STAK 
+  35 A                       
+  36 A E003                                                      
+  37 A E003 86FF                 LDAA      #$FF                  * CONFIG TODO EL PUERTO  G COMO SALIDAS 
+  38 A E005 B71001               STAA      DDRA                  * EL PUERTO A ES PARA DATOS DEL DISPLAY   
+  39 A E008                                                      
+  40 A E008 8600                 LDAA      #$00                  * SE PONE PUERTO A EN CEROS 
+  41 A E00A B71000               STAA      PORTA                 
+  42 A                  
+  43 A E00D 86FE                 LDAA      #$FE                  * CONFIG PUERTO D COMO SALIDAS (EXCEPTO PD0) 
+  44 A E00F B71009               STAA      DDRD                  * SEA  ENABLE DEL DISPLAY  PD4  Y RS PD3 
+  45 A                                       
+  46 A E012 18CE1008             LDY       #PORTD                
+  47 A E016 181D0018             BCLR      $00,Y,#$18            * BAJA   E Y RS  
+  48 A                  
+  49 A                  
+  50 A                  
+  51 A                 ********************************** 
+  52 A                 *PROGRAMA PRINCIPAL 
+  53 A                 ********************************** 
+  54 A E01A            MAIN                                      
+  55 A E01A BDE038               JSR       INICIA                
+  56 A E01D                                                      
+  57 A E01D            CICLO                                     
+  58 A E01D                                                      
+
+M68HC11 Absolute Assembler   Version 2.70G:/AVSIM11/LCD.ASC
+
+
+  59 A                        
+  60 A                         
+  61 A E01D 18CE1008             LDY       #PORTD                
+  62 A E021 181C0008             BSET      $00,Y,#$08            * SET   RS  
+  63 A E025                                                      
+  64 A E025 8650                 LDAA      #$50                  * LETRA P 
+  65 A E027 B71000               STAA      PORTA                 
+  66 A E02A BDE05C               JSR       ENABLE                
+  67 A                  
+  68 A E02D 18CE1008             LDY       #PORTD                
+  69 A E031 181D0008             BCLR      $00,Y,#$08            *  CLR   RS 
+  70 A E035                                                      
+  71 A                  
+  72 A E035 7EE01D               JMP       CICLO                 
+  73 A                 *********************************** 
+  74 A                 *INICIA  LCD 
+  75 A                 *********************************** 
+  76 A                  
+  77 A E038            INICIA                                    
+  78 A E038 18CE1008             LDY       #PORTD                
+  79 A E03C 181D0018             BCLR      $00,Y,#$18            * BAJA  E Y RS  
+  80 A E040 BDE072               JSR       WAIT                  
+  81 A                  
+  82 A E043                                                      
+  83 A E043 8601                 LDAA      #$01                  * FUNCTION LIMPIAR PANTALLA POR PUERTO G 
+  84 A E045 B71000               STAA      PORTA                 
+  85 A E048 BDE05C               JSR       ENABLE                
+  86 A                  
+  87 A E04B 860F                 LDAA      #$0F                  * FUNCTION INICIALIZA PANTALLA POR PUERTO G 
+  88 A E04D B71000               STAA      PORTA                 
+  89 A E050 BDE05C               JSR       ENABLE                
+  90 A                  
+  91 A E053 8638                 LDAA      #$38                  * FUNCTION ACTIVA 2 SEGMENTO 
+  92 A E055 B71000               STAA      PORTA                 
+  93 A E058 BDE05C               JSR       ENABLE                
+  94 A E05B                                                      
+  95 A E05B 39                   RTS                             
+  96 A                  
+  97 A                 *********************************** 
+  98 A                 * ENABLE 
+  99 A                 *********************************** 
+ 100 A E05C            ENABLE                                    
+ 101 A E05C BDE072               JSR       WAIT                  
+ 102 A E05F 18CE1008             LDY       #PORTD                
+ 103 A E063 181D0010             BCLR      $00,Y,#$10            * BAJA  E  
+ 104 A E067 BDE072               JSR       WAIT                  
+ 105 A E06A 181C0010             BSET      $00,Y,#$10            * SUBE  E  
+ 106 A E06E BDE072               JSR       WAIT                  
+ 107 A E071 39                   RTS                             
+ 108 A                  
+ 109 A                 *********************************** 
+ 110 A                 *TIEMPO DE ESPERA 
+ 111 A                 *********************************** 
+ 112 A E072            WAIT                                      
+ 113 A E072 8604                 LDAA      #$04                  
+ 114 A E074 970B                 STAA      $000B                 * CARGO UN 04 EN LOCALIDAD 000B 
+ 115 A                  
+ 116 A E076            TEMPO                                     
+
+M68HC11 Absolute Assembler   Version 2.70G:/AVSIM11/LCD.ASC
+
+
+ 117 A E076                                                      
+ 118 A E076 CEFFFF               LDX       #$FFFF                
+ 119 A E079 09         AGAIN     DEX                             
+ 120 A E07A 26FD                 BNE       AGAIN                 
+ 121 A E07C                                                      
+ 122 A E07C 7A000B               DEC       $000B                 
+ 123 A E07F 26F5                 BNE       TEMPO                 
+ 124 A                   
+ 125 A E081 39                   RTS                             
+ 126 A                 *********************************** 
+ 127 A                 *RESET 
+ 128 A                 *********************************** 
+ 129 A      FFFE                 ORG       $FFFE                 
+ 130 A FFFE E000       RESET     FCB       $E0,$00               
+ 131 A                 *********************************** 
+ 132 A                           END       $E000                 
+
+SYMBOL TABLE:  Total Entries=   30
+
+ADCTL               1030    MAIN                E01A
+ADR1                1031    OPTION              1039
+ADR2                1032    PACTL               1026
+ADR3                1033    PORTA               1000
+ADR4                1034    PORTD               1008
+AGAIN               E079    PORTE               100A
+BAUD                102B    PORTG               1002
+CICLO               E01D    RESET               FFFE
+CSCTL               105D    SCCR1               102C
+DDRA                1001    SCCR2               102D
+DDRD                1009    SCDR                102F
+DDRG                1003    SCSR                102E
+ENABLE              E05C    SPCR                1028
+HPRIO               103C    TEMPO               E076
+INICIA              E038    WAIT                E072
+
+Total errors: 0

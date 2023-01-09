@@ -1,0 +1,74 @@
+**********************************
+*PROGRAMA DE LEDS
+**********************************
+PACTL  EQU   $1026
+ADCTL  EQU   $1030
+ADR1   EQU   $1031
+ADR2   EQU   $1032
+ADR3   EQU   $1033
+ADR4   EQU   $1034
+OPTION EQU   $1039
+PORTD  EQU   $1008
+PORTA  EQU   $1000
+DDRA   EQU   $1001
+DDRD   EQU   $1009
+SCDR   EQU   $102F
+SCCR2  EQU   $102D
+SCSR   EQU   $102E
+SCCR1  EQU   $102C
+BAUD   EQU   $102B
+HPRIO  EQU   $103C
+**********************************
+*CONFIGURA REGISTROS
+**********************************
+       ORG   $E000   * DIR DE INICIO
+       LDS   #$03FF  * APUNTADOR DE STAK
+
+    *  LDD   #$332C
+    *  STAA  BAUD
+    *  STAB  SCCR2
+    *  LDAA  #$02
+    *  STAA  DDRD
+    *  LDAA  #$00
+    *  STAA  SCCR1
+       
+
+       LDAA  #$00
+       STAA  PACTL
+       LDAA  #$00
+       STAA  PORTA
+
+*       LDY   #$1000
+*       LDAA  #$04     *SE ESCRIBE PRIORIDAD ANTES DE MANDAR A CERO BIT I
+*       STAA  HPRIO
+*       LDAA  #$00     *SE MANDA A CERO BIT I DE CCR PARA HABILITAR TODAS LAS
+*       TAP            *INTERRUPCIONES MASCARABLES A EXCEPCION DE XIR
+
+**********************************
+*PROGRAMA PRINCIPAL
+**********************************
+PGM    LDAA  #$80
+       
+       JMP   PGM
+
+***********************************
+*TIMER
+***********************************
+TIMER  LDX   #$000F
+OTVZ   DEX
+       BNE   OTVZ
+       RTS
+***********************************
+*RESET
+***********************************
+       ORG    $FFFE
+RESET  FCB    $E0,$00
+***********************************
+       END   $E000
+
+
+
+
+
+
+

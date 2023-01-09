@@ -1,0 +1,113 @@
+
+M68HC11 Absolute Assembler   Version 2.70A:PROGRAMA.ASC
+
+
+   1 A                 *HABILITAR REGISTROS 
+   2 A      1030       ADCTL     EQU       $1030                 
+   3 A      1031       ADR1      EQU       $1031                 
+   4 A      1039       OPTION    EQU       $1039                 
+   5 A      1008       PORTD     EQU       $1008                 
+   6 A      1009       DDRD      EQU       $1009                 
+   7 A      1026       PACTL     EQU       $1026                 
+   8 A      1000       PORTA     EQU       $1000                 
+   9 A                 *CONFIGURAR REGISTROS 
+  10 A 0000 8620                 LDAA      #$20                  
+  11 A 0002 B71030               STAA      ADCTL                 
+  12 A 0005 8680                 LDAA      #$80                  
+  13 A 0007 B71039               STAA      OPTION                
+  14 A 000A 863F                 LDAA      #$3F                  
+  15 A 000C B71009               STAA      DDRD                  
+  16 A 000F 8680                 LDAA      #$80                  
+  17 A 0011 B71026               STAA      PACTL                 
+  18 A                 *PROGRAMA PRINCIPAL 
+  19 A      F800                 ORG       $F800                 
+  20 A F800 8E00FF               LDS       #$00FF                
+  21 A F803 18CEFC00   COMI      LDY       #$FC00                
+  22 A F807 18DF00               STY       $0000                 
+  23 A F80A 18CEFB00             LDY       #$FB00                
+  24 A F80E CEFA00               LDX       #$FA00                
+  25 A F811 E600       INI       LDAB      $00,X                 
+  26 A F813 F11031               CMPB      ADR1                  
+  27 A F816 2E03                 BGT       OTVZ                  
+  28 A F818 7EF824               JMP       SUB                   
+  29 A F81B 08         OTVZ      INX                             
+  30 A F81C 1808                 INY                             
+  31 A F81E 7C0000               INC       $0000                 
+  32 A F821 7EF811               JMP       INI                   
+  33 A F824 9600       SUB       LDAA      $0000                 
+  34 A F826 9701                 STAA      $0001                 
+  35 A F828 B71008               STAA      PORTD                 
+  36 A F82B 84C0                 ANDA      #$C0                  
+  37 A F82D B71000               STAA      PORTA                 
+  38 A F830 BDF850               JSR       RETAR                 
+  39 A F833 D702                 STAB      $0002                 
+  40 A F835 F71008               STAB      PORTD                 
+  41 A F838 C4C0                 ANDB      #$C0                  
+  42 A F83A F71000               STAB      PORTA                 
+  43 A F83D BDF850               JSR       RETAR                 
+  44 A F840 18A600               LDAA      $00,Y                 
+  45 A F843 9703                 STAA      $0003                 
+  46 A F845 B71008               STAA      PORTD                 
+  47 A F848 84C0                 ANDA      #$C0                  
+  48 A F84A B71000               STAA      PORTA                 
+  49 A F84D 7EF803               JMP       COMI                  
+  50 A                 *RETARDO 
+  51 A F850 36         RETAR     PSHA                            
+  52 A F851 37                   PSHB                            
+  53 A F852 3C                   PSHX                            
+  54 A F853 CE00FF               LDX       #$00FF                
+  55 A F856 09         OTVZ1     DEX                             
+  56 A F857 26FD                 BNE       OTVZ1                 
+  57 A F859 38                   PULX                            
+  58 A F85A 33                   PULB                            
+
+M68HC11 Absolute Assembler   Version 2.70A:PROGRAMA.ASC
+
+
+  59 A F85B 32                   PULA                            
+  60 A F85C 39                   RTS                             
+  61 A      FA00                 ORG       $FA00                 
+  62 A FA00 E0D9D2CBC4           FCB       $E0,$D9,$D2,$CB,$C4,$BD,$B6,$AF
+            BDB6AF    
+  63 A FA08 A8A19A               FCB       $A8,$A1,$9A           $93,$8C,$85,$7E,$77 
+  64 A FA0B 7069625B54           FCB       $70,$69,$62,$5B,$54,$4D,$46,$3F
+            4D463F    
+  65 A FA13 38312A231C           FCB       $38,$31,$2A,$23,$1C,$15,$0E,$07
+            150E07    
+  66 A FA1B 00                   FCB       $00                   
+  67 A      FB00                 ORG       $FB00                 
+  68 A FB00 0019324B64           FCB       $00,$19,$32,$4B,$64,$4B,$32,$19
+            4B3219    
+  69 A FB08 0019324B64           FCB       $00,$19,$32,$4B,$64,$4B,$32,$19
+            4B3219    
+  70 A FB10 0019324B64           FCB       $00,$19,$32,$4B,$64,$4B,$32,$19
+            4B3219    
+  71 A FB18 0019324B64           FCB       $00,$19,$32,$4B,$64,$4B,$32,$19
+            4B3219    
+  72 A FB20 0019324B64           FCB       $00,$19,$32,$4B,$64,$4B,$32,$19
+            4B3219    
+  73 A FB28 00                   FCB       $00                   
+  74 A      FC00                 ORG       $FC00                 
+  75 A FC00 0000000000           FCB       $00,$00,$00,$00,$00,$00,$00,$00
+            000000    
+  76 A FC08 0000000000           FCB       $00,$00,$00,$00,$00,$19,$32,$4B
+            19324B    
+  77 A FC10 644B321900           FCB       $64,$4B,$32,$19,$00,$00,$00,$00
+            000000    
+  78 A FC18 0000000000           FCB       $00,$00,$00,$00,$00,$00,$00,$00
+            000000    
+  79 A FC20 0000000000           FCB       $00,$00,$00,$00,$00,$00,$00,$00
+            000000    
+  80 A                           END       $F800                 
+
+SYMBOL TABLE:  Total Entries=   13
+
+ADCTL               1030    OTVZ1               F856
+ADR1                1031    PACTL               1026
+COMI                F803    PORTA               1000
+DDRD                1009    PORTD               1008
+INI                 F811    RETAR               F850
+OPTION              1039    SUB                 F824
+OTVZ                F81B    
+
+Total errors: 0
