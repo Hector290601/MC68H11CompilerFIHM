@@ -32,7 +32,6 @@ Return the direction type used on the function as an integrer from 0 to 5 and a 
 # get_direction_type {{{ 1
 def get_direction_type(instruction_set, args = ""):
     #debug purposes only
-    print(args, end=": ")
     # remueve espacios en blanco {{{2
     args = args.replace("  ", "")
     args = args.replace("  ", "")
@@ -42,7 +41,7 @@ def get_direction_type(instruction_set, args = ""):
         depreciable = args.index("*")
         args = args[:depreciable]
         if len(args) == 0:
-            return 7
+            return 7, 0, "N/A"
     # }}}
     # formateo de cadenas {{{2
     # separa los argumentos por espacios
@@ -52,7 +51,7 @@ def get_direction_type(instruction_set, args = ""):
     # }}}
     # Instruccion inexistente {{{2
     if instruction not in instruction_set:
-        return 8, 1
+        return 8, 1, "N/A"
     # }}}
     # Separa las tablas de equivalencias por tipo de direccionamiento {{{2
     data = instruction_set[instruction]
@@ -78,7 +77,7 @@ def get_direction_type(instruction_set, args = ""):
         i = i + 1
     # Comentario {{{2
     if len(args) == 0:
-        return 7
+        return 7, 0, "N/A"
     # }}}
     # Inmediato {{{2
     if supported_types["IMM"] != "":
@@ -93,14 +92,14 @@ def get_direction_type(instruction_set, args = ""):
                     try:
                         arg = int(arg)
                         if arg < 2 ** 16:
-                            returnable = instruction_set[instruction][0] + "," + args[-1]
+                            returnable = instruction_set[instruction][0] + ":" + instruction_set[instruction][1]  + "," + args[-1]
                             return 0, 0, returnable
                         else:
                             return 0, 1
                     except:
                         pass
                     if len(arg) <= 4:
-                        returnable = instruction_set[instruction][0] + "," + args[-1]
+                        returnable = instruction_set[instruction][0] + ":" + instruction_set[instruction][1]  + "," + args[-1]
                         return 0, 0, returnable
                     return 0, 1
     # }}}
@@ -115,19 +114,18 @@ def get_direction_type(instruction_set, args = ""):
                     try:
                         arg = int(arg)
                         if arg < 2 ** 8:
-                            returnable = instruction_set[instruction][4] + "," + args[-1]
+                            returnable = instruction_set[instruction][2] + ":" + instruction_set[instruction][3]  + "," + args[-1]
                             return 1, 0, returnable
                         else:
                             return 1, 1, "N/A"
                     except:
                         pass
                     if len(arg) <= 2:
-                        returnable = instruction_set[instruction][4] + "," + args[-1]
+                        returnable = instruction_set[instruction][2] + ":" + instruction_set[instruction][3]  + "," + args[-1]
                         return 1, 0, returnable
     # }}}
     # Extendido {{{2
     if supported_types["EXT"] != "":
-        print(instruction_set[instruction][4], end="")
         if len(args) == 2:
             arg = args[-1]
             if not "," in arg:
@@ -137,14 +135,14 @@ def get_direction_type(instruction_set, args = ""):
                     try:
                         arg = int(arg)
                         if arg < 2 ** 16:
-                            returnable = instruction_set[instruction][4] + "," + args[-1]
+                            returnable = instruction_set[instruction][8] + ":" + instruction_set[instruction][9]  + "," + args[-1]
                             return 4, 0, returnable
                         else:
                             return 4, 1, "N/A"
                     except:
                         pass
                     if len(arg) <= 4:
-                        returnable = instruction_set[instruction][4] + "," + args[-1]
+                        returnable = instruction_set[instruction][8] + ":" + instruction_set[instruction][9]  + "," + args[-1]
                         return 4, 0, returnable
                     return instruction_set[instruction][4], 4, 1
     # }}}
@@ -160,14 +158,14 @@ def get_direction_type(instruction_set, args = ""):
                     try:
                         arg = int(arg)
                         if arg < 2 ** 8:
-                            returnable = instruction_set[instruction][6] + "," + args[-1]
+                            returnable = instruction_set[instruction][4] + ":" + instruction_set[instruction][5]  + "," + args[-1]
                             return 2, 0, returnable
                         else:
                             return 2, 1, "N/A"
                     except:
                         pass
                     if len(arg) <= 4:
-                        returnable = instruction_set[instruction][6] + "," + args[-1]
+                        returnable = instruction_set[instruction][4] + ":" + instruction_set[instruction][5]  + "," + args[-1]
                         return 2, 0, returnable
                     return 2, 1, "N/A"
     # }}}
@@ -183,21 +181,21 @@ def get_direction_type(instruction_set, args = ""):
                     try:
                         arg = int(arg)
                         if arg < 2 ** 8:
-                            returnable = instruction_set[instruction][8] + "," + args[-1]
+                            returnable = instruction_set[instruction][6] + ":" + instruction_set[instruction][7]  + "," + args[-1]
                             return 3, 0, returnable
                         else:
                             return 3,1, "N/A"
                     except:
                         pass
                     if len(arg) <= 4:
-                            returnable = instruction_set[instruction][8] + "," + args[-1]
+                        returnable = instruction_set[instruction][0] + ":" + instruction_set[instruction][1]  + "," + args[-1]
                         return 3, 0, returnable
                     return 3, 1, "N/A"
     # }}}
     # Inherente {{{2
     if supported_types["INH"] != "":
         if len(args) == 1:
-            returnable = instruction_set[instruction][10] + "," + args[-1]
+            returnable = instruction_set[instruction][10] + ":" + instruction_set[instruction][11]  + "," + args[-1]
             return 5, 0, returnable
         else:
             return 5, 0, "N/A"
@@ -205,7 +203,7 @@ def get_direction_type(instruction_set, args = ""):
     # Relativo {{{2
     if supported_types["REL"] != "":
         if len(args) > 1 and not args[-1].isnumeric():
-            returnable = instruction_set[instruction][10] + "," + args[-1]
+            returnable = instruction_set[instruction][12] + ":2," + args[-1]
             return 6, 0, returnable
         else:
             return 6, 1, "N/A"

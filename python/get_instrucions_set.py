@@ -9,4 +9,5 @@ def get_instrucions_set():
     return data
 
 if __name__ == "__main__":
-    print(get_instrucions_set())
+    data = get_instrucions_set()
+    print(len(data["Mnemonico"]))

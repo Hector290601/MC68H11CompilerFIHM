@@ -24,7 +24,7 @@ InitRegisterPCwithRandomValue 0
 InitRegisterSPwithRandomValue 0
 LCDDisplayEnabled 1
 ListWindowCloseOnWriteToDirective 0
-MainWindowIsMaximized 1
+MainWindowIsMaximized 0
 SerialReceiveDisplayBEL<007>Character 0
 SerialReceiveDisplayCR<013>Character 0
 SerialReceiveDisplayLF<010>Character 0
@@ -109,10 +109,10 @@ LstNumberOfBytesPerLine 0x4
 LstNumberOfCharsInLeftMargin 0x2
 LstNumberOfCharsPerLine 0x50
 LstNumberOfLinesPerPage 0x42
-MainWindowPositionH 0x1e0
-MainWindowPositionW 0x280
-MainWindowPositionX 0x40
-MainWindowPositionY 0x40
+MainWindowPositionH 0x2d7
+MainWindowPositionW 0x2b9
+MainWindowPositionX 0x2a4
+MainWindowPositionY 0x0
 MaxMemoryNameLength 0x28
 RAM0Size 0x400
 RAM0Start 0x0

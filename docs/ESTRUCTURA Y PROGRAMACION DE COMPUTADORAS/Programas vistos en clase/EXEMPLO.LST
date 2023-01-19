@@ -1,0 +1,601 @@
+  ADDR B1 B2 B3 B4 C:\Users\hrmha\MC68H11CompilerFIHM\docs\         PAGE       1
+
+                   **********************************
+                   *PROGRAMA DE EJEMPLO
+                   **********************************
+                   PACTL  EQU   $1026
+                   PACNT  EQU   $1027
+                   ADCTL  EQU   $1030
+                   ADR1   EQU   $1031
+                   ADR2   EQU   $1032
+                   ADR3   EQU   $1033
+                   ADR4   EQU   $1034
+                   OPTION EQU   $1039
+
+                   PORTA  EQU   $1000
+                   PORTD  EQU   $1008
+                   PORTE  EQU   $100A
+                   PORTG  EQU   $1002
+
+                   DDRA   EQU   $1001
+                   DDRD   EQU   $1009
+                   DDRG   EQU   $1003
+
+                   TMSK2  EQU   $1024
+                   TFLG2  EQU   $1025
+
+                   SCDR   EQU   $102F
+                   SCCR2  EQU   $102D
+                   SCSR   EQU   $102E
+                   SCCR1  EQU   $102C
+                   BAUD   EQU   $102B
+                   HPRIO  EQU   $103C
+                   SPCR   EQU   $1028
+                   CSCTL  EQU   $105D
+                   OPT2   EQU   $1038
+
+                   * VARIABLES *********************
+
+                   ORDEN  EQU   $000C
+                   SEG    EQU   $000D
+                   U1     EQU   $000E
+                   U2     EQU   $000F
+                   U3     EQU   $0010
+                   U4     EQU   $0011
+                   U5     EQU   $0012
+                   V1     EQU   $0013
+                   V2     EQU   $0014
+                   BAS_H  EQU   $0015
+                   BAS_L  EQU   $0016
+                   V5     EQU   $0017
+                   TEMPO  EQU   $0018
+                   ALTO   EQU   $0019
+                   BAJO   EQU   $001A
+                   BASE_H EQU   $001B
+                   BASE_L EQU   $001C
+                   V3     EQU   $001D
+                   V4     EQU   $001E
+
+                   **********************************
+                   *CONFIGURA REGISTROS
+                   **********************************
+                          ORG   $8000   * DIR DE INICIO
+  8000 8E 03 FF           LDS   #$03FF  * APUNTADOR DE STAK
+
+
+  8003 86 00              LDAA  #$00    * CONFIG TODO EL PUERTO  A COMO ENTRADAS
+  8005 B7 10 01           STAA  DDRA    * EL PUERTO A
+  ADDR B1 B2 B3 B4 C:\Users\hrmha\MC68H11CompilerFIHM\docs\         PAGE       2
+
+
+  8008 86 FF              LDAA  #$FF    * CONFIG TODO EL PUERTO  G COMO SALIDAS
+  800A B7 10 03           STAA  DDRG    * EL PUERTO G
+
+  800D 86 00              LDAA  #$00    * SE PONE PUERTO G EN CEROS
+  800F B7 10 02           STAA  PORTG
+
+  8012 CC 30 2C           LDD   #$302C  * CONFIGURA PUERTO SERIAL
+  8015 B7 10 2B           STAA  BAUD    * BAUD  9600  para cristal de 8MHz
+  8018 F7 10 2D           STAB  SCCR2   * HABILITA  RX Y TX PERO INTERRUPCN SOLO
+.                  RX
+  801B 86 00              LDAA  #$00
+  801D B7 10 2C           STAA  SCCR1   * 8 BITS
+
+  8020 86 FE              LDAA  #$FE    * CONFIG PUERTO D COMO SALIDAS (EXCEPTO
+.                  PD0)
+  8022 B7 10 09           STAA  DDRD    * SEA  ENABLE DEL DISPLAY  PD4  Y RS PD3
+
+
+  8025 86 04              LDAA  #$04
+  8027 B7 10 3C           STAA  HPRIO
+
+  802A 86 00              LDAA  #$00
+  802C 06                 TAP
+
+
+
+
+
+
+
+                   **********************************
+                   *PROGRAMA PRINCIPAL
+                   **********************************
+                   MAIN
+  802D BD 80 9F           JSR   INICIA
+  8030 86 3F              LDAA  #$3F
+  8032 97 0C              STAA  ORDEN         * CARGO UN (?) en 000A
+
+
+                   CICLO
+  8034 96 0D              LDAA  SEG
+  8036 27 FC              BEQ   CICLO
+  8038 7F 00 0D           CLR   SEG
+
+  803B B6 10 27           LDAA  PACNT
+  803E 97 17              STAA  V5
+  8040 7F 10 27           CLR   PACNT
+
+
+  8043 BD 81 B8           JSR   DATARX        * DESPLIEGA DATO TRANSMITIDO
+  8046 18 09              DEY
+  8048 18 8F              XGDY
+  804A 97 19              STAA  ALTO
+  804C D7 1A              STAB  BAJO
+  804E 18 8F              XGDY
+  8050 96 19              LDAA  ALTO
+  8052 D6 1A              LDAB  BAJO
+  8054 BD 82 1A           JSR   BINBCD
+  8057 BD 81 4F           JSR   DISPLAY
+  805A BD 81 3F           JSR   COMA
+  805D BD 81 D4           JSR   VOLTA
+
+  8060 4F                 CLRA
+  8061 D6 13              LDAB  V1
+  ADDR B1 B2 B3 B4 C:\Users\hrmha\MC68H11CompilerFIHM\docs\         PAGE       3
+
+  8063 BD 82 2A           JSR   BNBCD
+  8066 BD 81 6E           JSR   DSPLY
+  8069 BD 81 3F           JSR   COMA
+
+  806C 4F                 CLRA
+  806D D6 14              LDAB  V2
+  806F BD 82 2A           JSR   BNBCD
+  8072 BD 81 6E           JSR   DSPLY
+  8075 BD 81 3F           JSR   COMA
+
+  8078 4F                 CLRA
+  8079 D6 1D              LDAB  V3
+  807B BD 82 2A           JSR   BNBCD
+  807E BD 81 6E           JSR   DSPLY
+  8081 BD 81 3F           JSR   COMA
+
+  8084 4F                 CLRA
+  8085 D6 1E              LDAB  V4
+  8087 BD 82 2A           JSR   BNBCD
+  808A BD 81 6E           JSR   DSPLY
+  808D BD 81 3F           JSR   COMA
+
+  8090 4F                 CLRA
+  8091 D6 17              LDAB  V5
+  8093 BD 82 2A           JSR   BNBCD
+  8096 BD 81 6E           JSR   DSPLY
+
+  8099 BD 81 9C           JSR   CRYTRN
+
+  809C 7E 80 34           JMP   CICLO
+
+
+                   ***********************************
+                   * INICIA
+                   ***********************************
+                   INICIA
+
+  809F 7F 00 0D          CLR  SEG
+
+  80A2 7F 10 02          CLR  PORTG
+  80A5 86 F4             LDAA #$F4
+  80A7 97 18             STAA TEMPO         * TEMPO ES VARIABLE PARA CONTAR 244
+.                  CICLOS
+
+  80A9 CE 10 24          LDX #TMSK2
+  80AC 1C 00 40          BSET $00,X,#$40    * HABILITA INTERRUPCION TIMER T-REAL
+  80AF 0E                CLI
+
+  80B0 CE 10 26          LDX #PACTL
+  80B3 1C 00 50          BSET $00,X,#$50    * HABILITA PAEN -ACUMULADOR PULSOS
+.                  ALTOS-
+  80B6 7F 10 27          CLR PACNT          * BORRA ACUMULADOR DE PULSOS
+
+  80B9 86 10             LDAA #$10
+  80BB 97 1B             STAA BASE_H        * PONE UN #1060 COMO DIRECCION BASE
+.                  INICIAL
+  80BD 86 60             LDAA #$60
+  80BF 97 1C             STAA BASE_L
+
+  80C1 18 CE 10 60       LDY  #$1060
+
+  80C5 86 16             LDAA #$16
+  80C7 97 15             STAA BAS_H        * PONE UN #1653 NUMERO TOTAL DE JUEGO
+.                  DE MUESTRAS
+  80C9 86 53             LDAA #$53
+  ADDR B1 B2 B3 B4 C:\Users\hrmha\MC68H11CompilerFIHM\docs\         PAGE       4
+
+  80CB 97 16             STAA BAS_L
+
+
+  80CD 7F 00 19          CLR  ALTO          * INICIA INDICE MUESTRA EN 0
+  80D0 7F 00 1A          CLR  BAJO
+
+  80D3 39                 RTS
+                   ***********************************
+                   * SACA
+                   ***********************************
+                   SACA
+
+
+  80D4 96 19              LDAA  ALTO         * INDICE DE MUESTRA (SEGUNDO)
+  80D6 D6 1A              LDAB  BAJO
+  80D8 18 8F              XGDY
+  80DA 18 08              INY
+  80DC 18 8F              XGDY
+  80DE BD 82 1A           JSR   BINBCD
+  80E1 BD 81 4F           JSR   DISPLAY
+  80E4 BD 81 3F           JSR   COMA
+
+  80E7 96 1B              LDAA  BASE_H       * INDICE DE MUESTRA (PARTICULAR)
+  80E9 D6 1C              LDAB  BASE_L
+  80EB 18 8F              XGDY
+
+  80ED 18 08              INY
+  80EF 4F                 CLRA
+  80F0 18 E6 00           LDAB  $00,Y
+  80F3 BD 82 2A           JSR   BNBCD
+  80F6 BD 81 6E           JSR   DSPLY
+  80F9 BD 81 3F           JSR   COMA
+
+  80FC 18 08              INY
+  80FE 4F                 CLRA
+  80FF 18 E6 00           LDAB  $00,Y
+  8102 BD 82 2A           JSR   BNBCD
+  8105 BD 81 6E           JSR   DSPLY
+  8108 BD 81 3F           JSR   COMA
+
+  810B 18 08              INY
+  810D 4F                 CLRA
+  810E 18 E6 00           LDAB  $00,Y
+  8111 BD 82 2A           JSR   BNBCD
+  8114 BD 81 6E           JSR   DSPLY
+  8117 BD 81 3F           JSR   COMA
+
+  811A 18 08              INY
+  811C 4F                 CLRA
+  811D 18 E6 00           LDAB  $00,Y
+  8120 BD 82 2A           JSR   BNBCD
+  8123 BD 81 6E           JSR   DSPLY
+  8126 BD 81 3F           JSR   COMA
+
+  8129 18 08              INY
+  812B 4F                 CLRA
+  812C 18 E6 00           LDAB  $00,Y
+  812F BD 82 2A           JSR   BNBCD
+  8132 BD 81 6E           JSR   DSPLY
+
+  8135 18 8F              XGDY
+  8137 97 1B              STAA BASE_H
+  8139 D7 1C              STAB BASE_L
+
+  813B BD 81 9C           JSR   CRYTRN
+  ADDR B1 B2 B3 B4 C:\Users\hrmha\MC68H11CompilerFIHM\docs\         PAGE       5
+
+
+  813E 39                 RTS
+                   ***********************************
+                   * COMA
+                   ***********************************
+                   COMA
+  813F CE 10 2E           LDX   #SCSR
+
+  8142 B6 10 2E           LDAA  SCSR
+  8145 86 2C              LDAA  #$2C             * COMA
+  8147 B7 10 2F           STAA  SCDR
+                   C1
+  814A 1F 00 80 FC        BRCLR $00,X,#$80 C1
+  814E 39                 RTS
+                   ***********************************
+                   * DESPLIEGA
+                   ***********************************
+                   DISPLAY
+
+  814F CE 10 2E           LDX   #SCSR
+
+  8152 B6 10 2E           LDAA  SCSR
+  8155 96 0E              LDAA  U1             * U1
+  8157 8B 30              ADDA  #$30
+  8159 B7 10 2F           STAA  SCDR
+                   T1
+  815C 1F 00 80 FC        BRCLR $00,X,#$80 T1
+
+  8160 B6 10 2E           LDAA  SCSR
+  8163 96 0F              LDAA  U2             * U2
+  8165 8B 30              ADDA  #$30
+  8167 B7 10 2F           STAA  SCDR
+                   T2
+  816A 1F 00 80 FC        BRCLR $00,X,#$80 T2
+
+                   DSPLY
+  816E CE 10 2E           LDX   #SCSR
+
+  8171 B6 10 2E           LDAA SCSR
+  8174 96 10              LDAA  U3             * U3
+  8176 8B 30              ADDA  #$30
+  8178 B7 10 2F           STAA  SCDR
+                   T3
+  817B 1F 00 80 FC        BRCLR $00,X,#$80 T3
+
+  817F B6 10 2E           LDAA SCSR
+  8182 96 11              LDAA  U4             * U4
+  8184 8B 30              ADDA  #$30
+  8186 B7 10 2F           STAA  SCDR
+                   T4
+  8189 1F 00 80 FC        BRCLR $00,X,#$80 T4
+
+  818D B6 10 2E           LDAA SCSR
+  8190 96 12              LDAA  U5             * U5
+  8192 8B 30              ADDA  #$30
+  8194 B7 10 2F           STAA  SCDR
+                   T5
+  8197 1F 00 80 FC        BRCLR $00,X,#$80 T5
+
+  819B 39                 RTS
+
+                   ***********************************
+                   * CARRY RETURN
+                   ***********************************
+
+  ADDR B1 B2 B3 B4 C:\Users\hrmha\MC68H11CompilerFIHM\docs\         PAGE       6
+
+                   CRYTRN
+  819C CE 10 2E           LDX   #SCSR
+  819F B6 10 2E           LDAA  SCSR
+  81A2 86 0A              LDAA  #$0A             * NEW LINE
+  81A4 B7 10 2F           STAA  SCDR
+                   CR1
+  81A7 1F 00 80 FC        BRCLR $00,X,#$80 CR1
+
+  81AB B6 10 2E           LDAA SCSR
+  81AE 86 0D              LDAA #$0D              * CARRY RETURN
+  81B0 B7 10 2F           STAA SCDR
+                   CR2
+  81B3 1F 00 80 FC        BRCLR $00,X,#$80 CR2
+
+  81B7 39                 RTS
+                   ***********************************
+                   *  DESPLIEGUE DE DATO RECIBIDO
+                   ***********************************
+
+                   DATARX
+  81B8 CE 10 2E           LDX   #SCSR
+  81BB B6 10 2E           LDAA  SCSR
+  81BE 96 0C              LDAA  ORDEN             * NEW LINE
+  81C0 B7 10 2F           STAA  SCDR
+                   DT1
+  81C3 1F 00 80 FC        BRCLR $00,X,#$80 DT1
+
+  81C7 B6 10 2E           LDAA SCSR
+  81CA 86 3A              LDAA #$3A              * DOS PUNTOS
+  81CC B7 10 2F           STAA SCDR
+                   DT2
+  81CF 1F 00 80 FC        BRCLR $00,X,#$80 DT2
+
+  81D3 39                 RTS
+                   ***********************************
+                   * voltimetro
+                   ***********************************
+                   VOLTA
+  81D4 CE 10 30          LDX #ADCTL
+
+  81D7 86 80             LDAA #$80
+  81D9 B7 10 39          STAA OPTION        * PONE EN MARCHA EL ADC
+
+  81DC 86 10             LDAA #$10
+  81DE B7 10 30          STAA ADCTL         * ENTRADA MULTIPLE SELECCIONA CANAL
+.                  0
+
+                   E1
+  81E1 1F 00 80 FC       BRCLR $00,X,#$80 E1
+  81E5 F6 10 31          LDAB ADR1
+  81E8 D7 13             STAB V1
+
+  81EA 86 80             LDAA #$80
+  81EC B7 10 39          STAA OPTION        * PONE EN MARCHA EL ADC
+
+  81EF 86 11             LDAA #$11
+  81F1 B7 10 30          STAA ADCTL         * ENTRADA MULTIPLE SELECCIONA CANAL
+.                  1
+
+                   E2
+  81F4 1F 00 80 FC       BRCLR $00,X,#$80 E2
+  81F8 F6 10 32          LDAB ADR2
+  81FB D7 14             STAB V2
+
+  81FD 86 12             LDAA #$12
+  ADDR B1 B2 B3 B4 C:\Users\hrmha\MC68H11CompilerFIHM\docs\         PAGE       7
+
+  81FF B7 10 30          STAA ADCTL         * ENTRADA MULTIPLE SELECCIONA CANAL
+.                  2
+
+                   E3
+  8202 1F 00 80 FC       BRCLR $00,X,#$80 E3
+  8206 F6 10 33          LDAB ADR3
+  8209 D7 1D             STAB V3
+
+  820B 86 13             LDAA #$13
+  820D B7 10 30          STAA ADCTL         * ENTRADA MULTIPLE SELECCIONA CANAL
+.                  3
+
+                   E4
+  8210 1F 00 80 FC       BRCLR $00,X,#$80 E4
+  8214 F6 10 34          LDAB ADR4
+  8217 D7 1E             STAB V4
+
+
+  8219 39                RTS
+                   ***********************************
+                   * CONVIERTE A BCD
+                   ***********************************
+
+                   BINBCD
+
+  821A CE 27 10          LDX  #$2710
+  821D 02                IDIV
+  821E 8F                XGDX
+  821F D7 0E             STAB U1
+  8221 8F                XGDX
+  8222 CE 03 E8          LDX  #$3E8
+  8225 02                IDIV
+  8226 8F                XGDX
+  8227 D7 0F             STAB U2
+  8229 8F                XGDX
+
+                   BNBCD
+  822A CE 00 64          LDX  #$64
+  822D 02                IDIV
+  822E 8F                XGDX
+  822F D7 10             STAB U3
+  8231 8F                XGDX
+  8232 CE 00 0A          LDX  #$A
+  8235 02                IDIV
+  8236 8F                XGDX
+  8237 D7 11             STAB U4
+  8239 8F                XGDX
+  823A D7 12             STAB U5
+
+
+
+  823C 39                RTS
+
+
+
+                   ***********************************
+                   * ATENCION A INTERRUPCION SERIAL
+                   ***********************************
+                          ORG  $F100
+
+  F100 36                 PSHA
+
+  F101 B6 10 2E           LDAA SCSR
+  F104 B6 10 2F           LDAA SCDR
+  F107 97 0C              STAA ORDEN
+  ADDR B1 B2 B3 B4 C:\Users\hrmha\MC68H11CompilerFIHM\docs\         PAGE       8
+
+
+  F109 32                 PULA
+
+  F10A 3B                 RTI
+
+                   ***********************************
+                   * ATENCION A INTERRUPCION REAL TIME
+                   ***********************************
+                         ORG  $F110
+
+  F110 36                PSHA
+  F111 3C                PSHX
+
+  F112 CE 10 25          LDX #TFLG2
+  F115 1C 00 40          BSET $00,X,#$40    * BORRA BANDERA INTERRUPCION
+  F118 7A 00 18          DEC TEMPO
+  F11B 27 03             BEQ SEGUNDO
+
+  F11D 32                PULA
+  F11E 38                PULX
+  F11F 3B                RTI
+
+                   SEGUNDO
+  F120 86 FF             LDAA #$FF
+  F122 97 0D             STAA SEG           * SEG ES UNA BANDERA DE SEGUNDO
+  F124 86 F4             LDAA #$F4
+  F126 97 18             STAA TEMPO         * TEMPO ES VARIABLE PARA CONTAR 244
+.                  CICLOS
+  F128 7C 10 02          INC  PORTG
+
+  F12B 32                PULA
+  F12C 38                PULX
+  F12D 3B                RTI
+                   ***********************************
+                   * VECTOR INTERRUPCION SERIAL
+                   ***********************************
+                          ORG   $FFD6
+  FFD6 F1 00              FCB   $F1,$00
+
+                   ***********************************
+                   * VECTOR INTERRUPCION REAL TIME
+                   ***********************************
+                          ORG   $FFF0
+  FFF0 F1 10              FCB   $F1,$10
+
+                   ***********************************
+                   *RESET
+                   ***********************************
+                          ORG    $FFFE
+  FFFE 80 00       RESET  FCB    $80,$00
+                   ***********************************
+                          END
+
+  Symbol Table 
+
+  U2                 000F
+  U3                 0010
+  VOLTA              81D4
+  BASE_L             001C
+  U4                 0011
+  U5                 0012
+  V1                 0013
+  V2                 0014
+  V3                 001D
+  V4                 001E
+  Symbol Table     C:\Users\hrmha\MC68H11CompilerFIHM\docs\         PAGE       9
+
+  V5                 0017
+  OPTION             1039
+  E1                 81E1
+  E2                 81F4
+  E3                 8202
+  E4                 8210
+  SACA               80D4
+  CR1                81A7
+  SEGUNDO            F120
+  CR2                81B3
+  CSCTL              105D
+  PACTL              1026
+  TMSK2              1024
+  SCCR1              102C
+  SCCR2              102D
+  BAUD               102B
+  BNBCD              822A
+  CICLO              8034
+  ADCTL              1030
+  CRYTRN             819C
+  TFLG2              1025
+  MAIN               802D
+  OPT2               1038
+  ALTO               0019
+  BINBCD             821A
+  RESET              FFFE
+  SEG                000D
+  ORDEN              000C
+  DT1                81C3
+  DT2                81CF
+  HPRIO              103C
+  COMA               813F
+  SCSR               102E
+  BAJO               001A
+  ADR1               1031
+  ADR2               1032
+  ADR3               1033
+  ADR4               1034
+  PORTA              1000
+  PORTD              1008
+  PORTE              100A
+  PORTG              1002
+  DDRA               1001
+  DSPLY              816E
+  DDRD               1009
+  DATARX             81B8
+  DDRG               1003
+  SCDR               102F
+  DISPLAY            814F
+  PACNT              1027
+  INICIA             809F
+  T1                 815C
+  SPCR               1028
+  T2                 816A
+  T3                 817B
+  T4                 8189
+  BAS_H              0015
+  T5                 8197
+  BAS_L              0016
+  C1                 814A
+  BASE_H             001B
+  TEMPO              0018
+  U1                 000E
