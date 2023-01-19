@@ -100,7 +100,8 @@ def get_direction_type(instruction_set, args = ""):
                     except:
                         pass
                     if len(arg) <= 4:
-                        return 0, 0
+                        returnable = instruction_set[instruction][0] + "," + args[-1]
+                        return 0, 0, returnable
                     return 0, 1
     # }}}
     # Directo {{{2
@@ -114,13 +115,15 @@ def get_direction_type(instruction_set, args = ""):
                     try:
                         arg = int(arg)
                         if arg < 2 ** 8:
-                            return instruction_set[instruction][4], 1, 0
+                            returnable = instruction_set[instruction][4] + "," + args[-1]
+                            return 1, 0, returnable
                         else:
-                            return instruction_set[instruction][4], 1, 1
+                            return 1, 1, "N/A"
                     except:
                         pass
                     if len(arg) <= 2:
-                        return instruction_set[instruction][4], 1, 0
+                        returnable = instruction_set[instruction][4] + "," + args[-1]
+                        return 1, 0, returnable
     # }}}
     # Extendido {{{2
     if supported_types["EXT"] != "":
@@ -134,13 +137,15 @@ def get_direction_type(instruction_set, args = ""):
                     try:
                         arg = int(arg)
                         if arg < 2 ** 16:
-                            return instruction_set[instruction][4], 4, 0
+                            returnable = instruction_set[instruction][4] + "," + args[-1]
+                            return 4, 0, returnable
                         else:
-                            return instruction_set[instruction][4], 4, 1
+                            return 4, 1, "N/A"
                     except:
                         pass
                     if len(arg) <= 4:
-                        return instruction_set[instruction][4], 4, 0
+                        returnable = instruction_set[instruction][4] + "," + args[-1]
+                        return 4, 0, returnable
                     return instruction_set[instruction][4], 4, 1
     # }}}
     # Indexado respecto a X {{{2
@@ -155,14 +160,16 @@ def get_direction_type(instruction_set, args = ""):
                     try:
                         arg = int(arg)
                         if arg < 2 ** 8:
-                            return instruction_set[instruction][6], 2, 0
+                            returnable = instruction_set[instruction][6] + "," + args[-1]
+                            return 2, 0, returnable
                         else:
-                            return instruction_set[instruction][6], 2, 1
+                            return 2, 1, "N/A"
                     except:
                         pass
                     if len(arg) <= 4:
-                        return instruction_set[instruction][6], 2, 0
-                    return instruction_set[instruction][6], 2, 1
+                        returnable = instruction_set[instruction][6] + "," + args[-1]
+                        return 2, 0, returnable
+                    return 2, 1, "N/A"
     # }}}
     # Indexado respecto a Y {{{2
     if supported_types["IDY"] != "":
@@ -176,28 +183,32 @@ def get_direction_type(instruction_set, args = ""):
                     try:
                         arg = int(arg)
                         if arg < 2 ** 8:
-                            return instruction_set[instruction][8],3,0
+                            returnable = instruction_set[instruction][8] + "," + args[-1]
+                            return 3, 0, returnable
                         else:
-                            return instruction_set[instruction][8],3,1
+                            return 3,1, "N/A"
                     except:
                         pass
                     if len(arg) <= 4:
-                        return instruction_set[instruction][8],3,0
-                    return instruction_set[instruction][8],3,1
+                            returnable = instruction_set[instruction][8] + "," + args[-1]
+                        return 3, 0, returnable
+                    return 3, 1, "N/A"
     # }}}
     # Inherente {{{2
     if supported_types["INH"] != "":
         if len(args) == 1:
-            return instruction_set[instruction][10],5, 0
+            returnable = instruction_set[instruction][10] + "," + args[-1]
+            return 5, 0, returnable
         else:
-            return instruction_set[instruction][10],5, 0
+            return 5, 0, "N/A"
     # }}}
     # Relativo {{{2
     if supported_types["REL"] != "":
         if len(args) > 1 and not args[-1].isnumeric():
-            return instruction_set[instruction][12],6, 0
+            returnable = instruction_set[instruction][10] + "," + args[-1]
+            return 6, 0, returnable
         else:
-            return instruction_set[instruction][12],6, 1
+            return 6, 1, "N/A"
 
 # }}}
 # }}}
