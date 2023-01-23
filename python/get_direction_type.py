@@ -2,6 +2,7 @@
 import time
 import os
 from get_instrucions_set import *
+from get_args import *
 
 """
 Return the direction type used on the function as an integrer from 0 to 5 and a args array to validate the directiionment type and an array adverting about some erros.
@@ -34,7 +35,7 @@ def get_direction_type(instruction_set, args = ""):
     #debug purposes only
     # remueve espacios en blanco {{{2
     args = args.replace("  ", "")
-    args = args.replace("  ", "")
+    args = args.replace("\n", "")
     # }}}
     # remueve comentarios {{{2
     if "*" in args:
@@ -45,8 +46,10 @@ def get_direction_type(instruction_set, args = ""):
     # }}}
     # formateo de cadenas {{{2
     # separa los argumentos por espacios
-    args = args.split(" ")
+    args = get_args(args)
     # selecciona el argumento que indica la orden
+    if len(args) == 0:
+        return 8, 1, "N/A"
     instruction = args[0].lower()
     # }}}
     # Instruccion inexistente {{{2
@@ -65,16 +68,6 @@ def get_direction_type(instruction_set, args = ""):
             "REL": data[12]
             }
     # }}}
-    i = 0
-    for arg in args:
-        if arg == " " or arg == "":
-            args.pop(i)
-        i = i + 1
-    i = 0
-    for arg in args:
-        if arg == " " or arg == "":
-            args.pop(i)
-        i = i + 1
     # Comentario {{{2
     if len(args) == 0:
         return 7, 0, "N/A"
@@ -85,23 +78,8 @@ def get_direction_type(instruction_set, args = ""):
             arg = args[-1]
             if not "," in arg:
                 if "#" in arg:
-                    if "$" in arg:
-                        arg = arg[2:]
-                    else:
-                        arg = arg[1:]
-                    try:
-                        arg = int(arg)
-                        if arg < 2 ** 16:
-                            returnable = instruction_set[instruction][0] + ":" + instruction_set[instruction][1]  + "," + args[-1]
-                            return 0, 0, returnable
-                        else:
-                            return 0, 1
-                    except:
-                        pass
-                    if len(arg) <= 4:
-                        returnable = instruction_set[instruction][0] + ":" + instruction_set[instruction][1]  + "," + args[-1]
-                        return 0, 0, returnable
-                    return 0, 1
+                    returnable = instruction_set[instruction][0] + ":" + instruction_set[instruction][1]  + "," + args[-1]
+                    return 0, 0, returnable
     # }}}
     # Directo {{{2
     if supported_types["DIR"] != "":
@@ -144,7 +122,7 @@ def get_direction_type(instruction_set, args = ""):
                     if len(arg) <= 4:
                         returnable = instruction_set[instruction][8] + ":" + instruction_set[instruction][9]  + "," + args[-1]
                         return 4, 0, returnable
-                    return instruction_set[instruction][4], 4, 1
+                    return 4, 1, "N/A"
     # }}}
     # Indexado respecto a X {{{2
     if supported_types["IDX"] != "":
@@ -214,6 +192,11 @@ def get_direction_type(instruction_set, args = ""):
 if __name__ == "__main__":
     # Tests {{{ 1
     data = get_instrucions_set()
+    command = ''
+    while command != 'quit':
+        command = input('@> ')
+        print(get_direction_type(data, command))
+    """
     # Inmediato {{{ 2
     print("IMM:")
     print(get_direction_type(data, "ldaa #$45   * ESTO ES UN COMENTARIO"))
@@ -300,3 +283,4 @@ if __name__ == "__main__":
     print(get_direction_type(data, "* NOP"))
     # }}}
     # }}}
+    """
